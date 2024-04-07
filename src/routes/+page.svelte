@@ -1,2 +1,10 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+
+
+<div class="flex flex-row justify-center align-middle gap-4">
+    <div class="col">
+        <a class="block card card-hover p-4" href="/sheets/monster-guts">Monster Guts</a>
+    </div>
+    <div class="col">
+        <a class="block card card-hover p-4" href="/sheets/godbound">Godbound</a>
+    </div>
+</div>
