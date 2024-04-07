@@ -1,32 +1,70 @@
-import { Resource } from 'libEnums/MonsterGutsEnums'
+import { Resource, CompanionBreed } from 'libEnums/MonsterGutsEnums'
 
 
-export interface Tag {
+export interface ITag {
     name: string,
-    type: string,
-    effect: string
+    description: string,
+    type: 'Ephemera' | 'Elemental' | 'Effect' | 'Equipment'
 }
 
-export interface Equipment {
-    tags: string[]
+export interface IEquipment {
+    tags: ITag[]
 }
 
-export interface Weapon {
-    weapon: string,
+export interface IWeaponMove {
+    name: string,
+    cost: number,
+    description: number
+}
+
+export interface IWeaponPassive {
+    name: string,
+    description: string
+}
+
+export interface IWeapon {
+    weaponName: string,
+    blisters: number
     crush: number,
     slice: number,
     pierce: number,
-    resource: number,
-    health: number,
+    resource: {
+        current: number,
+        max: number
+    },
+    health: {
+        current: number,
+        max: number
+    },
     resourceType: Resource,
-    tags: string[]
+    weaponTags: ITag[],
+    passive: IWeaponPassive,
+    equipment: IEquipment,
+}
+
+export interface ICompanionTool {
+    name: string,
+    description: string,
+    used: boolean
 }
 
 
 
-export interface Character {
+// High level types
+
+/**
+ * Search currently used weapon by activeWeapon
+ */
+export interface ICharacter {
     id: number,
     name: string,
-    weapons: Weapon[]
+    weapons: IWeapon[]
+    activeWeapon: string // search by weapon name
+    img: string
 }
 
+export interface ICompanion {
+    name: string,
+    type: CompanionBreed,
+    tool: ICompanionTool
+}
