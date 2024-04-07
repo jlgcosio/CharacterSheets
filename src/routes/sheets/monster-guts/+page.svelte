@@ -1,31 +1,27 @@
 <script lang="ts">
-	
 	import type { PageData } from './$types';
-	import type {ICharacter, IWeapon} from 'libTypes/MonsterGutsTypes';
+	import type { ICharacter, IWeapon } from 'libTypes/MonsterGutsTypes';
 
-	import Weapon from './Weapon.svelte'
-
+	import Weapon from './Weapon.svelte';
 
 	export let data: PageData;
 
-	let characterList: ICharacter[] = data.characterList
+	let characterList: ICharacter[] = data.characterList;
 
-	$: if(dirty){
-			if(selectedCharacter){
-				characterList = characterList.map(character => {
-					return character.id === selectedCharacter.id ? selectedCharacter : character;
-				})
-			}
-			localStorage.setItem('monster-guts', JSON.stringify(characterList));
-			dirty = false
+	$: if (dirty) {
+		if (selectedCharacter) {
+			characterList = characterList.map((character) => {
+				return character.id === selectedCharacter.id ? selectedCharacter : character;
+			});
 		}
-
+		localStorage.setItem('monster-guts', JSON.stringify(characterList));
+		dirty = false;
+	}
 
 	let dirty = false;
 	let selectedCharacter: ICharacter;
 
-
-	function createNewCharacter(){
+	function createNewCharacter() {
 		const newCharacter: ICharacter = {
 			id: Date.now(),
 			name: 'New Character',
@@ -34,15 +30,15 @@
 			activeWeapon: '',
 			equipment: {
 				tags: []
-			},
-		}
+			}
+		};
 		characterList = [...characterList, newCharacter];
 		selectedCharacter = newCharacter;
-		dirty = true
+		dirty = true;
 	}
 
-	function addWeapon(){
-		const weapon:IWeapon = {
+	function addWeapon() {
+		const weapon: IWeapon = {
 			blisters: 0,
 			health: {
 				current: 0,
@@ -55,7 +51,7 @@
 			weaponTags: [],
 			passive: {
 				name: 'Passive',
-				description: "Passive effect description"
+				description: 'Passive effect description'
 			},
 			resource: {
 				current: 0,
@@ -63,27 +59,26 @@
 			},
 			resourceType: 'Edge'
 		};
-		selectedCharacter.weapons = [...selectedCharacter.weapons, weapon]
-		dirty = true
+		selectedCharacter.weapons = [...selectedCharacter.weapons, weapon];
+		dirty = true;
 	}
 
-	function deleteWeapon(index: number){
+	function deleteWeapon(index: number) {
 		console.log(selectedCharacter.weapons[index]);
-		selectedCharacter.weapons = selectedCharacter.weapons.filter((w,i) => i !== index);
-		dirty = true
+		selectedCharacter.weapons = selectedCharacter.weapons.filter((w, i) => i !== index);
+		dirty = true;
 	}
 
-	function updateWeapon(weapon: IWeapon, index: number){
-		selectedCharacter.weapons = selectedCharacter.weapons.map((w,i)=>{
-				return i === index ? weapon : w
-			}
-		)
-		dirty = true
+	function updateWeapon(weapon: IWeapon, index: number) {
+		selectedCharacter.weapons = selectedCharacter.weapons.map((w, i) => {
+			return i === index ? weapon : w;
+		});
+		dirty = true;
 	}
 </script>
 
 <section class="mb-5">
-	<section class="flex flex-row w-full gap-4">
+	<section class="flex w-full flex-row gap-4">
 		<div class="flex-1">
 			<select class="select" name="character-select" bind:value={selectedCharacter}>
 				{#each characterList as character}
@@ -92,7 +87,7 @@
 			</select>
 		</div>
 		<div class="flex-2">
-			<button class="btn variant-filled" on:click={createNewCharacter}>Create new character</button>
+			<button class="variant-filled btn" on:click={createNewCharacter}>Create new character</button>
 		</div>
 	</section>
 </section>
@@ -104,23 +99,31 @@
 				<div class="col-span-2">
 					<label class="label">
 						<span>Name</span>
-						<input type="text" class="input" bind:value={selectedCharacter.name} on:change={()=>dirty=true}>
+						<input
+							type="text"
+							class="input"
+							bind:value={selectedCharacter.name}
+							on:change={() => (dirty = true)}
+						/>
 					</label>
 				</div>
 			</div>
-			
+
 			{#if selectedCharacter.weapons.length < 4}
 				<div class="mt-4 grid grid-cols-6">
 					<div class="col-span-1">
-						<button class="btn variant-filled input" on:click={addWeapon}>Add new weapon</button>
+						<button class="input variant-filled btn" on:click={addWeapon}>Add new weapon</button>
 					</div>
 				</div>
 			{/if}
 			<h3 class="h3 mt-4">Weapons</h3>
 			<div class="mt-4 grid grid-cols-2 gap-4">
-				
 				{#each selectedCharacter.weapons as weapon, index}
-					<Weapon {weapon} on:change={()=>updateWeapon(weapon,index)} on:delete={()=>deleteWeapon(index)}/>
+					<Weapon
+						{weapon}
+						on:change={() => updateWeapon(weapon, index)}
+						on:delete={() => deleteWeapon(index)}
+					/>
 				{/each}
 			</div>
 		</div>
