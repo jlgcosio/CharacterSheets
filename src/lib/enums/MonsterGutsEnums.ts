@@ -1,8 +1,8 @@
 
 export enum Resource {
-    Edge,
-    Ammo,
-    Melody
+    Edge = 'Edge',
+    Ammo = 'Ammo',
+    Melody = 'Melody'
 }
 
 export enum CompanionBreed {

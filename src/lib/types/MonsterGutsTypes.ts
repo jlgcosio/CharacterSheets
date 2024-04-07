@@ -36,7 +36,7 @@ export interface IWeapon {
         current: number,
         max: number
     },
-    resourceType: Resource,
+    resourceType: 'Edge' | 'Ammo' | 'Melody',
     weaponTags: ITag[],
     passive: IWeaponPassive,
 }
