@@ -39,7 +39,6 @@ export interface IWeapon {
     resourceType: Resource,
     weaponTags: ITag[],
     passive: IWeaponPassive,
-    equipment: IEquipment,
 }
 
 export interface ICompanionTool {
@@ -61,6 +60,7 @@ export interface ICharacter {
     weapons: IWeapon[]
     activeWeapon: string // search by weapon name
     img: string
+    equipment: IEquipment,
 }
 
 export interface ICompanion {
