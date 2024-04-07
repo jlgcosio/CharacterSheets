@@ -9,7 +9,6 @@ export const load = (async () => {
     console.log(list)
     if (list) {
         const parsed = JSON.parse(list) as unknown as ICharacter[];
-        console.log(parsed)
         characterList = parsed;
     }
 
