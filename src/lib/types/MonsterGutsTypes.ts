@@ -56,7 +56,7 @@ export interface ICharacter {
 	id: number;
 	name: string;
 	weapons: IWeapon[];
-	activeWeapon: string; // search by weapon name
+	activeWeapon: number; // search by weapon name
 	img: string;
 	equipment: IEquipment;
 	notes: string

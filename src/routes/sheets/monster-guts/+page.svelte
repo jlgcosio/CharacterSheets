@@ -27,7 +27,7 @@
 			name: 'New Character',
 			img: '',
 			weapons: [],
-			activeWeapon: '',
+			activeWeapon: 0,
 			equipment: {
 				tags: []
 			},
@@ -132,15 +132,30 @@
 					</div>
 				</div>
 			{/if}
-			<h3 class="h3 mt-4">Weapons</h3>
-			<div class="mt-4 grid grid-cols-2 gap-4">
-				{#each selectedCharacter.weapons as weapon, index}
-					<Weapon
-						{weapon}
-						on:change={() => updateWeapon(weapon, index)}
-						on:delete={() => deleteWeapon(index)}
-					/>
-				{/each}
+			<div class="mt-4">
+				<div role="tablist" class="tabs tabs-lifted">
+					{#each selectedCharacter.weapons as weapon, index}
+						<input
+							type="radio"
+							name="weaponTabs"
+							role="tab"
+							class="tab"
+							aria-label={weapon.weaponName}
+							on:click={() => {
+								selectedCharacter.activeWeapon = index;
+								dirty = true;
+							}}
+							checked={selectedCharacter.activeWeapon === index}
+						/>
+						<div role="tabpanel" class="tab-content rounded-box border-base-300 bg-base-100 p-6">
+							<Weapon
+								{weapon}
+								on:change={() => updateWeapon(weapon, index)}
+								on:delete={() => deleteWeapon(index)}
+							/>
+						</div>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</section>

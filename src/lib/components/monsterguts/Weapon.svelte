@@ -27,69 +27,75 @@
 	}
 </script>
 
-<div class="card col-auto grid grid-cols-1 gap-2 p-4">
+<div class="col-auto grid grid-cols-1 gap-2 p-4">
 	<div class="flex flex-row gap-2">
 		<div class="flex w-full items-center gap-4">
 			<input
 				type="text"
-				class="input flex-1"
+				class="input input-bordered flex-1"
 				bind:value={weapon.weaponName}
 				on:change={() => (dirty = true)}
 			/>
-			<button class="variant-soft-error btn" on:click={removeWeapon}>Delete</button>
+			<button class="btn btn-warning" on:click={removeWeapon}>Delete</button>
 		</div>
 	</div>
-	<label class="label">
-		<span class="inline">Health</span>
-		<div class="flex flex-row items-center gap-4">
-			<input
-				type="number"
-				class="input"
-				bind:value={weapon.health.current}
-				min={0}
-				on:change={() => (dirty = true)}
-			/>
-			<p>/</p>
-			<input
-				type="number"
-				class="input"
-				bind:value={weapon.health.max}
-				min={0}
-				on:change={() => (dirty = true)}
-			/>
-			<button class="variant-outline btn" on:click={resetHp}>Reset HP</button>
+	<div class="flex w-full gap-4">
+		<div class="flex-1">
+			<label class="form-control">
+				<span class="inline">Health</span>
+				<div class="flex flex-row items-center gap-4">
+					<input
+						type="number"
+						class="input input-bordered"
+						bind:value={weapon.health.current}
+						min={0}
+						on:change={() => (dirty = true)}
+					/>
+					<span>/</span>
+					<input
+						type="number"
+						class="input input-bordered"
+						bind:value={weapon.health.max}
+						min={0}
+						on:change={() => (dirty = true)}
+					/>
+					<button class="btn" on:click={resetHp}>Reset HP</button>
+				</div>
+			</label>
 		</div>
-	</label>
-	<label class="label">
-		<span class="inline">{weapon.resourceType}</span>
-		<div class="flex flex-row items-center gap-4">
-			<input
-				type="number"
-				class="input"
-				bind:value={weapon.resource.current}
-				min={0}
-				on:change={() => (dirty = true)}
-			/>
-			<p>/</p>
-			<input
-				type="number"
-				class="input"
-				bind:value={weapon.resource.max}
-				min={0}
-				on:change={() => (dirty = true)}
-			/>
-			<button class="variant-outline btn" on:click={resetResource}
-				>Reset {weapon.resourceType}</button
-			>
+		<div class="flex-1">
+			<label class="form-control">
+				<span class="inline">{weapon.resourceType}</span>
+				<div class="flex flex-row items-center gap-4">
+					<input
+						type="number"
+						class="input input-bordered"
+						bind:value={weapon.resource.current}
+						min={0}
+						on:change={() => (dirty = true)}
+					/>
+					<span>/</span>
+					<input
+						type="number"
+						class="input input-bordered"
+						bind:value={weapon.resource.max}
+						min={0}
+						on:change={() => (dirty = true)}
+					/>
+					<button class="variant-outline btn" on:click={resetResource}
+						>Reset {weapon.resourceType}</button
+					>
+				</div>
+			</label>
 		</div>
-	</label>
+	</div>
 	<div class="grid grid-cols-3 gap-2">
 		<div class="col-auto">
-			<label class="label">
-				<span class="inline">Crush</span>
+			<label class="form-control">
+				<span>Crush</span>
 				<input
 					type="number"
-					class="input"
+					class="input input-bordered"
 					bind:value={weapon.crush}
 					min={0}
 					on:change={() => (dirty = true)}
@@ -97,11 +103,11 @@
 			</label>
 		</div>
 		<div class="col-auto">
-			<label class="label">
-				<span class="inline">Slice</span>
+			<label class="form-control">
+				<span>Slice</span>
 				<input
 					type="number"
-					class="input"
+					class="input input-bordered"
 					bind:value={weapon.slice}
 					min={0}
 					on:change={() => (dirty = true)}
@@ -109,11 +115,11 @@
 			</label>
 		</div>
 		<div class="col-auto">
-			<label class="label">
-				<span class="inline">Pierce</span>
+			<label class="form-control">
+				<span>Pierce</span>
 				<input
 					type="number"
-					class="input"
+					class="input input-bordered"
 					bind:value={weapon.pierce}
 					min={0}
 					on:change={() => (dirty = true)}
