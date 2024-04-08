@@ -18,8 +18,14 @@
 		dirty = false;
 	}
 
+	// $: console.log(characterList, selectedCharacter);
+
 	let dirty = false;
 	let selectedCharacter: ICharacter;
+
+	if (characterList.length === 0) {
+		createNewCharacter();
+	}
 
 	function createNewCharacter() {
 		const newCharacter: ICharacter = {
@@ -36,6 +42,18 @@
 		characterList = [...characterList, newCharacter];
 		selectedCharacter = newCharacter;
 		dirty = true;
+	}
+
+	function deleteCharacter() {
+		if (selectedCharacter) {
+			characterList = characterList.filter((character) => character.id !== selectedCharacter.id);
+			if (characterList.length > 0) {
+				selectedCharacter = characterList[0];
+				dirty = true;
+			} else {
+				createNewCharacter();
+			}
+		}
 	}
 
 	function addWeapon() {
@@ -157,6 +175,9 @@
 					{/each}
 				</div>
 			</div>
+		</div>
+		<div class="card-footer flex justify-end p-4">
+			<button class="btn btn-error" on:click={deleteCharacter}>Delete character</button>
 		</div>
 	</section>
 {/if}
