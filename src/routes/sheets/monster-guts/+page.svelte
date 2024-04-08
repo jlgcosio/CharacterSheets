@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import type { ICharacter, IWeapon } from 'libTypes/MonsterGutsTypes';
 
-	import Weapon from './Weapon.svelte';
+	import Weapon from 'components/monsterguts/Weapon.svelte';
 
 	export let data: PageData;
 
@@ -30,7 +30,8 @@
 			activeWeapon: '',
 			equipment: {
 				tags: []
-			}
+			},
+			notes: ''
 		};
 		characterList = [...characterList, newCharacter];
 		selectedCharacter = newCharacter;
@@ -57,7 +58,8 @@
 				current: 0,
 				max: 0
 			},
-			resourceType: 'Edge'
+			resourceType: 'Edge',
+			moves: []
 		};
 		selectedCharacter.weapons = [...selectedCharacter.weapons, weapon];
 		dirty = true;
@@ -80,29 +82,43 @@
 <section class="mb-5">
 	<section class="flex w-full flex-row gap-4">
 		<div class="flex-1">
-			<select class="select" name="character-select" bind:value={selectedCharacter}>
+			<select
+				class="select select-bordered w-full"
+				name="character-select"
+				bind:value={selectedCharacter}
+			>
 				{#each characterList as character}
 					<option value={character}>{character.name}</option>
 				{/each}
 			</select>
 		</div>
 		<div class="flex-2">
-			<button class="variant-filled btn" on:click={createNewCharacter}>Create new character</button>
+			<button class="btn btn-primary" on:click={createNewCharacter}>Create new character</button>
 		</div>
 	</section>
 </section>
 
 {#if selectedCharacter}
-	<section class="card container p-4">
+	<section class="card mt-4 shadow-xl">
 		<div class="card-body gap-4">
 			<div class="grid grid-cols-4 gap-4">
 				<div class="col-span-2">
-					<label class="label">
+					<label class="form-control">
 						<span>Name</span>
 						<input
 							type="text"
-							class="input"
+							class="input input-bordered"
 							bind:value={selectedCharacter.name}
+							on:change={() => (dirty = true)}
+						/>
+					</label>
+				</div>
+				<div class="col-span-2">
+					<label class="form-control">
+						<span>Notes</span>
+						<textarea
+							class="textarea textarea-bordered"
+							bind:value={selectedCharacter.notes}
 							on:change={() => (dirty = true)}
 						/>
 					</label>
@@ -112,7 +128,7 @@
 			{#if selectedCharacter.weapons.length < 4}
 				<div class="mt-4 grid grid-cols-6">
 					<div class="col-span-1">
-						<button class="input variant-filled btn" on:click={addWeapon}>Add new weapon</button>
+						<button class="btn btn-primary" on:click={addWeapon}>Add new weapon</button>
 					</div>
 				</div>
 			{/if}

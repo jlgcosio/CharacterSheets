@@ -1,27 +1,17 @@
-/** @type {import('tailwindcss').Config}*/
-import { join } from 'path';
-import type { Config } from 'tailwindcss';
-import { skeleton } from '@skeletonlabs/tw-plugin';
-import forms from '@tailwindcss/forms';
-
 const config = {
 	content: [
-		'./src/**/*.{html,js,svelte,ts}',
-		join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
+		'./src/**/*.{html,js,svelte,ts}'
 	],
 
 	theme: {
 		extend: {}
 	},
-
 	plugins: [
-		forms,
-		skeleton({
-			themes: {
-				preset: ['skeleton']
-			}
-		})
-	]
-} satisfies Config;
+		require("daisyui")
+	],
+	daisyui: {
+		themes: ['light', 'dark', 'retro']
+	}
+}
 
 module.exports = config;

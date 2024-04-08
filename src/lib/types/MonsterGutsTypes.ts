@@ -13,7 +13,7 @@ export interface IEquipment {
 export interface IWeaponMove {
 	name: string;
 	cost: number;
-	description: number;
+	description: string;
 }
 
 export interface IWeaponPassive {
@@ -38,6 +38,7 @@ export interface IWeapon {
 	resourceType: 'Edge' | 'Ammo' | 'Melody';
 	weaponTags: ITag[];
 	passive: IWeaponPassive;
+	moves: IWeaponMove[];
 }
 
 export interface ICompanionTool {
@@ -58,6 +59,7 @@ export interface ICharacter {
 	activeWeapon: string; // search by weapon name
 	img: string;
 	equipment: IEquipment;
+	notes: string
 }
 
 export interface ICompanion {
