@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import type { ICharacter, IWeapon } from 'libTypes/MonsterGutsTypes';
+	import { NewCharacter, NewWeapon } from 'libConstants/monsterguts';
 
 	import Weapon from 'components/monsterguts/Weapon.svelte';
 
@@ -18,8 +19,6 @@
 		dirty = false;
 	}
 
-	// $: console.log(characterList, selectedCharacter);
-
 	let dirty = false;
 	let selectedCharacter: ICharacter;
 
@@ -28,19 +27,9 @@
 	}
 
 	function createNewCharacter() {
-		const newCharacter: ICharacter = {
-			id: Date.now(),
-			name: 'New Character',
-			img: '',
-			weapons: [],
-			activeWeapon: 0,
-			equipment: {
-				tags: []
-			},
-			notes: ''
-		};
-		characterList = [...characterList, newCharacter];
-		selectedCharacter = newCharacter;
+		const newChar = NewCharacter;
+		characterList = [...characterList, newChar];
+		selectedCharacter = newChar;
 		dirty = true;
 	}
 
@@ -57,34 +46,11 @@
 	}
 
 	function addWeapon() {
-		const weapon: IWeapon = {
-			blisters: 0,
-			health: {
-				current: 0,
-				max: 0
-			},
-			crush: 0,
-			slice: 0,
-			pierce: 0,
-			weaponName: 'New Weapon',
-			weaponTags: [],
-			passive: {
-				name: 'Passive',
-				description: 'Passive effect description'
-			},
-			resource: {
-				current: 0,
-				max: 0
-			},
-			resourceType: 'Edge',
-			moves: []
-		};
-		selectedCharacter.weapons = [...selectedCharacter.weapons, weapon];
+		selectedCharacter.weapons = [...selectedCharacter.weapons, NewWeapon];
 		dirty = true;
 	}
 
 	function deleteWeapon(index: number) {
-		console.log(selectedCharacter.weapons[index]);
 		selectedCharacter.weapons = selectedCharacter.weapons.filter((w, i) => i !== index);
 		dirty = true;
 	}
@@ -98,7 +64,7 @@
 </script>
 
 <section class="mb-5">
-	<section class="flex w-full flex-row gap-4">
+	<section class="flex w-full flex-row flex-wrap gap-4">
 		<div class="flex-1">
 			<select
 				class="select select-bordered w-full"
@@ -119,8 +85,8 @@
 {#if selectedCharacter}
 	<section class="card mt-4 shadow-xl">
 		<div class="card-body gap-4">
-			<div class="grid grid-cols-4 gap-4">
-				<div class="col-span-2">
+			<div class="flex flex-wrap gap-4">
+				<div class="flex-1">
 					<label class="form-control">
 						<span>Name</span>
 						<input
@@ -131,7 +97,7 @@
 						/>
 					</label>
 				</div>
-				<div class="col-span-2">
+				<div class="flex-1">
 					<label class="form-control">
 						<span>Notes</span>
 						<textarea

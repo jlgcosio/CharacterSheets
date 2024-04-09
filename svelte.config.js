@@ -20,7 +20,8 @@ const config = {
 		alias: {
 			'libTypes/*': './src/lib/types/*',
 			'libEnums/*': './src/lib/enums/*',
-			'components/*': './src/lib/components/*'
+			'components/*': './src/lib/components/*',
+			'libConstants/*': './src/lib/constants/*'
 		}
 	}
 };
