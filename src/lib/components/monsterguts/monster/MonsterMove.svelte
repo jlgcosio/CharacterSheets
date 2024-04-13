@@ -19,15 +19,15 @@
 			placeholder="Move"
 			bind:value={move.name}
 		/>
-		<input
-			type="text"
-			class="input join-item input-bordered"
-			placeholder="Description"
-			bind:value={move.description}
-		/>
+
 		<div class="tooltip" data-tip="Harm dealt, if any">
-			<input type="number" class="input join-item input-bordered" bind:value={move.harm} />
+			<input type="number" class="input join-item input-bordered max-w-16" bind:value={move.harm} />
 		</div>
 	</div>
 	<button class="btn btn-error ml-4" on:click={() => dispatch('remove')}>X</button>
 </div>
+<textarea
+	class="join-item textarea textarea-bordered"
+	placeholder="Description"
+	bind:value={move.description}
+/>

@@ -25,11 +25,19 @@
 			placeholder="Part"
 			bind:value={part.name}
 		/>
-		<input type="number" class="input join-item input-bordered" bind:value={part.values.current} />
+		<input
+			type="number"
+			class="input join-item input-bordered max-w-36"
+			bind:value={part.values.current}
+		/>
 		<div class="input join-item input-bordered flex items-center justify-center p-4">
 			<span>/</span>
 		</div>
-		<input type="number" class="input join-item input-bordered" bind:value={part.values.max} />
+		<input
+			type="number"
+			class="input join-item input-bordered max-w-36"
+			bind:value={part.values.max}
+		/>
 		<select class="join-item select select-bordered" bind:value={part.type}>
 			<option value="Hard">Hard</option>
 			<option value="Soft">Soft</option>

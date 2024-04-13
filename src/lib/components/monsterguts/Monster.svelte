@@ -72,7 +72,7 @@
 </script>
 
 <section class="card flex flex-col flex-wrap gap-4 shadow-xl">
-	<div class="card-body">
+	<div class="card-body max-w-full">
 		<label class="form-control">
 			<span class="label-text">Name</span>
 			<input type="text" class="input input-bordered flex-auto" bind:value={monster.name} />
@@ -202,7 +202,8 @@
 					/>
 				</div>
 			</div>
-			<div class="flex flex-auto flex-col gap-4">
+			<div class="divider divider-horizontal"></div>
+			<div class="flex flex-auto flex-col gap-2">
 				<div class="flex items-center justify-between">
 					<span class="label-text">Parts</span>
 					<button class="btn" on:click={addNewPart}>Add new part</button>
