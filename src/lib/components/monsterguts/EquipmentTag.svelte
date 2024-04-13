@@ -14,7 +14,7 @@
 	let dirty = false;
 
 	// Update this list when expanding ITag:types property
-	const tagOptions = ['Ephemera', 'Elemental', 'Effect', 'Equipment'];
+	const tagOptions = ['Elemental', 'Effect'];
 
 	$: if (dirty) {
 		dispatch('change', tagCopy);
@@ -32,29 +32,33 @@
 
 <div class="flex gap-2">
 	{#if tagCopy.equipped !== undefined}
-		<label class="form-control items-center">
-			<span class="label-text">Equipped?</span>
-			<input type="checkbox" class="checkbox" bind:checked={tagCopy.equipped} />
-		</label>
-	{/if}
-	<div class="tooltip" data-tip="Equipment type is used for the weapon's basic attacks">
-		<select
-			class="select select-bordered"
-			bind:value={tagCopy.type}
-			on:change={() => {
-				if (tagCopy.type === 'Equipment' || tagCopy.type === 'Ephemera') {
-					tagCopy.equipped = undefined;
-				} else {
-					tagCopy.equipped = false;
-				}
-				toggleDirty();
-			}}
+		<div
+			class="tooltip"
+			data-tip="Only 1 Elemental and 1 Effect tags should be equipped at the same time"
 		>
-			{#each tagOptions as opt}
-				<option value={opt}>{opt}</option>
-			{/each}
-		</select>
-	</div>
+			<label class="form-control items-center">
+				<span class="label-text">Equipped?</span>
+				<input type="checkbox" class="checkbox" bind:checked={tagCopy.equipped} />
+			</label>
+		</div>
+	{/if}
+
+	<select
+		class="select select-bordered"
+		bind:value={tagCopy.type}
+		on:change={() => {
+			if (tagCopy.type === 'Equipment' || tagCopy.type === 'Ephemera') {
+				tagCopy.equipped = undefined;
+			} else {
+				tagCopy.equipped = false;
+			}
+			toggleDirty();
+		}}
+	>
+		{#each tagOptions as opt}
+			<option value={opt}>{opt}</option>
+		{/each}
+	</select>
 	<input
 		type="text"
 		class="input input-bordered"

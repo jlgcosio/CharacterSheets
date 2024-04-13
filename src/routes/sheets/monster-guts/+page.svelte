@@ -1,8 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { ICharacter, IWeapon } from 'libTypes/MonsterGutsTypes';
+	import type { ICharacter, ITag, IWeapon } from 'libTypes/MonsterGutsTypes';
 
 	import Weapon from 'components/monsterguts/Weapon.svelte';
+	import WeaponTag from 'components/monsterguts/WeaponTag.svelte';
+	import EquipmentTag from 'components/monsterguts/EquipmentTag.svelte';
 
 	export let data: PageData;
 
@@ -80,6 +82,7 @@
 			moves: []
 		};
 		selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
+		selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
 		dirty = true;
 	}
 
@@ -92,6 +95,31 @@
 	function updateWeapon(weapon: IWeapon, index: number) {
 		selectedCharacter.weapons = selectedCharacter.weapons.map((w, i) => {
 			return i === index ? weapon : w;
+		});
+		dirty = true;
+	}
+
+	function addEquipmentTag() {
+		const newTag: ITag = {
+			name: '',
+			description: '',
+			type: 'Elemental',
+			equipped: false
+		};
+		selectedCharacter.equipment.tags = [...selectedCharacter.equipment.tags, newTag];
+	}
+
+	function deleteEquipmentTag(index: number) {
+		selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.filter(
+			(t, i) => i !== index
+		);
+		dirty = true;
+	}
+
+	function updateEquipmentTag(tag: ITag, index: number) {
+		selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.map((t, i) => {
+			console.log(t, i === index);
+			return i === index ? tag : t;
 		});
 		dirty = true;
 	}
@@ -173,6 +201,24 @@
 									on:delete={() => deleteWeapon(index)}
 								/>
 							{/if}
+						</div>
+					{/each}
+				</div>
+			</div>
+
+			<div class="mt-4">
+				<div class="form-control w-full gap-4">
+					<div class="flex items-center gap-4">
+						<h3>Equipment Tags</h3>
+						<button class="btn" on:click={addEquipmentTag}>Add Tag</button>
+					</div>
+					{#each selectedCharacter.equipment.tags as tag, i}
+						<div class="flex flex-col flex-wrap gap-2">
+							<EquipmentTag
+								{tag}
+								on:change={(e) => updateEquipmentTag(e.detail, i)}
+								on:remove={() => deleteEquipmentTag(i)}
+							/>
 						</div>
 					{/each}
 				</div>

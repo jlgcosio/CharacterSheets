@@ -4,6 +4,7 @@ export interface ITag {
 	name: string;
 	description: string;
 	type: 'Ephemera' | 'Elemental' | 'Effect' | 'Equipment';
+	equipped?: boolean
 }
 
 export interface IEquipment {

@@ -199,10 +199,10 @@
 	</div>
 	<div class="form-control w-full gap-4">
 		<div class="flex items-center gap-4">
-			<h3>Tags</h3>
+			<h3>Weapon Tags</h3>
 			<button class="btn" on:click={addTag}>Add Tag</button>
 		</div>
-		<div class="flex flex-wrap gap-2">
+		<div class="flex flex-col flex-wrap gap-2">
 			{#each weapon.weaponTags as tag, i}
 				<WeaponTag {tag} on:change={(e) => updateTag(e.detail, i)} on:remove={() => deleteTag(i)} />
 			{/each}
