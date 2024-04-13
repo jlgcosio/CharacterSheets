@@ -5,9 +5,11 @@ import type { PageLoad } from './$types';
 export const load = (async () => {
 	let characterList: ICharacter[] = [];
 	const list = localStorage.getItem('monster-guts');
-	console.log(list)
 	if (list) {
 		const parsed = JSON.parse(list) as unknown as ICharacter[];
+		// TODO list cleanup to prevent errors when loading values
+
+
 		characterList = parsed;
 	}
 

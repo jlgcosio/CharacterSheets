@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import type { ICharacter, IWeapon } from 'libTypes/MonsterGutsTypes';
-	import { NewCharacter, NewWeapon } from 'libConstants/monsterguts';
 
 	import Weapon from 'components/monsterguts/Weapon.svelte';
 
@@ -21,13 +20,25 @@
 
 	let dirty = false;
 	let selectedCharacter: ICharacter;
+	$: console.log(selectedCharacter);
 
 	if (characterList.length === 0) {
 		createNewCharacter();
 	}
 
 	function createNewCharacter() {
-		const newChar = NewCharacter;
+		// Note: definte new constant instead of making defaults. Using defaults will result in same reference that will propagate to new defined characters
+		const newChar: ICharacter = {
+			name: 'New Character',
+			img: '',
+			weapons: [],
+			activeWeapon: 0,
+			equipment: {
+				tags: []
+			},
+			notes: '',
+			id: Date.now()
+		};
 		characterList = [...characterList, newChar];
 		selectedCharacter = newChar;
 		dirty = true;
@@ -46,12 +57,35 @@
 	}
 
 	function addWeapon() {
-		selectedCharacter.weapons = [...selectedCharacter.weapons, NewWeapon];
+		const newWeapon: IWeapon = {
+			blisters: 0,
+			health: {
+				current: 0,
+				max: 0
+			},
+			crush: 0,
+			slice: 0,
+			pierce: 0,
+			weaponName: 'New Weapon',
+			weaponTags: [],
+			passive: {
+				name: 'Passive',
+				description: 'Passive effect description'
+			},
+			resource: {
+				current: 0,
+				max: 0
+			},
+			resourceType: 'Edge',
+			moves: []
+		};
+		selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
 		dirty = true;
 	}
 
 	function deleteWeapon(index: number) {
 		selectedCharacter.weapons = selectedCharacter.weapons.filter((w, i) => i !== index);
+		selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
 		dirty = true;
 	}
 
@@ -132,11 +166,13 @@
 							checked={selectedCharacter.activeWeapon === index}
 						/>
 						<div role="tabpanel" class="tab-content rounded-box border-base-300 bg-base-100 p-6">
-							<Weapon
-								{weapon}
-								on:change={() => updateWeapon(weapon, index)}
-								on:delete={() => deleteWeapon(index)}
-							/>
+							{#if selectedCharacter.activeWeapon === index}
+								<Weapon
+									{weapon}
+									on:change={(e) => updateWeapon(e.detail, index)}
+									on:delete={() => deleteWeapon(index)}
+								/>
+							{/if}
 						</div>
 					{/each}
 				</div>
