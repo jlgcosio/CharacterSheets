@@ -2,7 +2,8 @@ import { Resource, CompanionBreed } from 'libEnums/MonsterGutsEnums';
 
 export interface IClock {
 	current: number,
-	max: number
+	max: number,
+	immune: boolean
 }
 
 export interface IEquipmentTag {
@@ -56,6 +57,10 @@ export interface ICompanionTool {
 export interface IMonsterPart {
 	name: string,
 	type: 'Hard' | 'Soft',
+	values: {
+		current: number,
+		max: number
+	}
 	broken: boolean
 }
 
@@ -97,7 +102,12 @@ export interface IMonster {
 	description: string,
 	rage: string,
 	tags: IMonsterTag[],
-	moves: IMonsterMove[]
+	moves: IMonsterMove[],
+	body: {
+		current: number,
+		max: number
+	},
+	parts: IMonsterPart[]
 	clocks: {
 		bleed: IClock,
 		fire: IClock,
