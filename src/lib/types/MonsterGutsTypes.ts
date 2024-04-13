@@ -1,6 +1,11 @@
 import { Resource, CompanionBreed } from 'libEnums/MonsterGutsEnums';
 
-export interface ITag {
+export interface IClock {
+	current: number,
+	max: number
+}
+
+export interface IEquipmentTag {
 	name: string;
 	description: string;
 	type: 'Ephemera' | 'Elemental' | 'Effect' | 'Equipment';
@@ -8,7 +13,7 @@ export interface ITag {
 }
 
 export interface IEquipment {
-	tags: ITag[];
+	tags: IEquipmentTag[];
 }
 
 export interface IWeaponMove {
@@ -37,7 +42,7 @@ export interface IWeapon {
 		max: number;
 	};
 	resourceType: 'Edge' | 'Ammo' | 'Melody';
-	weaponTags: ITag[];
+	weaponTags: IEquipmentTag[];
 	passive: IWeaponPassive;
 	moves: IWeaponMove[];
 }
@@ -46,6 +51,23 @@ export interface ICompanionTool {
 	name: string;
 	description: string;
 	used: boolean;
+}
+
+export interface IMonsterPart {
+	name: string,
+	type: 'Hard' | 'Soft',
+	broken: boolean
+}
+
+export interface IMonsterMove {
+	name: string,
+	description: string,
+	harm: number
+}
+
+export interface IMonsterTag {
+	name: string,
+	desciption: string
 }
 
 // High level types
@@ -67,4 +89,25 @@ export interface ICompanion {
 	name: string;
 	type: CompanionBreed;
 	tool: ICompanionTool;
+}
+
+export interface IMonster {
+	id: string,
+	name: string,
+	description: string,
+	rage: string,
+	tags: IMonsterTag[],
+	moves: IMonsterMove[]
+	clocks: {
+		bleed: IClock,
+		fire: IClock,
+		ice: IClock,
+		metal: IClock,
+		shock: IClock,
+		slime: IClock,
+		snooze: IClock,
+		stagger: IClock,
+		stun: IClock,
+		venom: IClock,
+	}
 }

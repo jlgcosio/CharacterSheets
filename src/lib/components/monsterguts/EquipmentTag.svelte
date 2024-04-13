@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { ITag } from 'libTypes/MonsterGutsTypes';
+	import type { IEquipmentTag } from 'libTypes/MonsterGutsTypes';
 	import { createEventDispatcher } from 'svelte';
 
 	interface WeaponTagsDispatch {
-		change: ITag;
+		change: IEquipmentTag;
 		remove: undefined;
 	}
 
 	const dispatch = createEventDispatcher<WeaponTagsDispatch>();
 
-	export let tag: ITag;
+	export let tag: IEquipmentTag;
 	let tagCopy = tag;
 	let dirty = false;
 

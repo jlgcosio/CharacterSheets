@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { ICharacter, ITag, IWeapon } from 'libTypes/MonsterGutsTypes';
+	import type { ICharacter, IEquipmentTag, IWeapon } from 'libTypes/MonsterGutsTypes';
 
 	import Weapon from 'components/monsterguts/Weapon.svelte';
 	import WeaponTag from 'components/monsterguts/WeaponTag.svelte';
@@ -100,7 +100,7 @@
 	}
 
 	function addEquipmentTag() {
-		const newTag: ITag = {
+		const newTag: IEquipmentTag = {
 			name: '',
 			description: '',
 			type: 'Elemental',
@@ -116,7 +116,7 @@
 		dirty = true;
 	}
 
-	function updateEquipmentTag(tag: ITag, index: number) {
+	function updateEquipmentTag(tag: IEquipmentTag, index: number) {
 		selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.map((t, i) => {
 			console.log(t, i === index);
 			return i === index ? tag : t;
@@ -145,7 +145,7 @@
 </section>
 
 {#if selectedCharacter}
-	<section class="card mt-4 shadow-xl">
+	<section class="card mt-4 w-full shadow-xl">
 		<div class="card-body gap-4">
 			<div class="flex flex-wrap gap-4">
 				<div class="flex-1">

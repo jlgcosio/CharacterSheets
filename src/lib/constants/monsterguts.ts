@@ -1,6 +1,6 @@
-import type { ITag } from "libTypes/MonsterGutsTypes";
+import type { IEquipmentTag } from "libTypes/MonsterGutsTypes";
 
-export const WeaponTags: ITag[] = [
+export const WeaponTags: IEquipmentTag[] = [
     {
         name: 'Aimed',
         description: "+1 Harm when using Pierce",

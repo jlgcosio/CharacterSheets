@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ITag, IWeapon } from 'libTypes/MonsterGutsTypes';
+	import type { IEquipmentTag, IWeapon } from 'libTypes/MonsterGutsTypes';
 	import { createEventDispatcher } from 'svelte';
 	import WeaponTag from './WeaponTag.svelte';
 
@@ -35,7 +35,7 @@
 	}
 
 	function addTag() {
-		const newTag: ITag = {
+		const newTag: IEquipmentTag = {
 			name: '',
 			description: '',
 			type: 'Equipment'
@@ -48,7 +48,7 @@
 		dirty = true;
 	}
 
-	function updateTag(tag: ITag, index: number) {
+	function updateTag(tag: IEquipmentTag, index: number) {
 		weapon = {
 			...weapon,
 			weaponTags: weapon.weaponTags.map((t, i) => {
