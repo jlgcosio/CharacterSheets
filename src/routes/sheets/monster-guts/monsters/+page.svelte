@@ -6,6 +6,7 @@
 
 	// export let data: PageData;
 	let monsterList: IMonster[] = [];
+	let files: FileList;
 
 	let monster: IMonster = {
 		id: `monster-${Date.now()}`,
@@ -72,8 +73,36 @@
 			}
 		}
 	};
+
+	async function importFiles() {
+		let list: IMonster[] = [];
+		if (files.length > 0) {
+			for (let index = 0; index < files.length; index++) {
+				const file = await files[index].text();
+				const mon = JSON.parse(file) as unknown as IMonster;
+				list.push(mon);
+			}
+			monsterList = list;
+		}
+	}
 </script>
 
 <section class="my-12">
-	<Monster {monster} />
+	<label class="form-control w-full max-w-xs">
+		<div class="label">
+			<span class="label-text">Pick files to import</span>
+		</div>
+		<input
+			type="file"
+			class="file-input file-input-bordered w-full max-w-xs"
+			accept="json"
+			multiple={true}
+			bind:files
+			on:change={importFiles}
+		/>
+	</label>
+
+	{#each monsterList as monster}
+		<Monster {monster} />
+	{/each}
 </section>

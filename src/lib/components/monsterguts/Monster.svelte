@@ -69,14 +69,34 @@
 	function deleteMove(index: number) {
 		monster.moves = monster.moves.filter((t, i) => i !== index);
 	}
+
+	function exportFile() {
+		var a = window.document.createElement('a');
+		a.href = window.URL.createObjectURL(new Blob([JSON.stringify(monster)], { type: 'text/json' }));
+		a.download = `${monster.name.replaceAll(' ', '_')}.json`;
+
+		// Append anchor to body.
+		document.body.appendChild(a);
+		a.click();
+
+		// Remove anchor from body
+		document.body.removeChild(a);
+	}
 </script>
 
-<section class="card flex flex-col flex-wrap gap-4 shadow-xl">
+<section class="card mt-4 flex flex-col flex-wrap gap-4 shadow-xl">
 	<div class="card-body max-w-full">
-		<label class="form-control">
-			<span class="label-text">Name</span>
-			<input type="text" class="input input-bordered flex-auto" bind:value={monster.name} />
-		</label>
+		<div class="flex flex-wrap gap-4">
+			<div class="flex-auto">
+				<label class="form-control">
+					<span class="label-text">Name</span>
+					<input type="text" class="input input-bordered flex-auto" bind:value={monster.name} />
+				</label>
+			</div>
+			<div class="flex items-end">
+				<button class="btn" on:click={exportFile}>Export</button>
+			</div>
+		</div>
 		<div class="flex flex-wrap gap-4">
 			<label class="form-control flex-auto">
 				<span class="label-text">Description</span>
@@ -93,8 +113,18 @@
 				</div>
 				{#each monster.tags as tag, i}
 					<div class="flex gap-2">
-						<input type="text" class="input input-bordered" bind:value={tag.name} />
-						<input type="text" class="input input-bordered flex-1" bind:value={tag.desciption} />
+						<input
+							type="text"
+							class="input input-bordered"
+							placeholder="Roll"
+							bind:value={tag.name}
+						/>
+						<input
+							type="text"
+							class="input input-bordered flex-1"
+							placeholder="Tag"
+							bind:value={tag.desciption}
+						/>
 						<button class="btn btn-error" on:click={() => deleteTag(i)}>X</button>
 					</div>
 				{/each}
@@ -140,66 +170,68 @@
 				</div>
 				<div class="form-control">
 					<span class="label-text">Clocks</span>
-					<MonsterClock
-						label="Bleed"
-						current={monster.clocks.bleed.current}
-						max={monster.clocks.bleed.max}
-						on:reset={() => resetClock('bleed')}
-					/>
-					<MonsterClock
-						label="Fire"
-						current={monster.clocks.fire.current}
-						max={monster.clocks.ice.max}
-						on:reset={() => resetClock('fire')}
-					/>
-					<MonsterClock
-						label="Ice"
-						current={monster.clocks.ice.current}
-						max={monster.clocks.ice.max}
-						on:reset={() => resetClock('ice')}
-					/>
-					<MonsterClock
-						label="Metal"
-						current={monster.clocks.metal.current}
-						max={monster.clocks.metal.max}
-						on:reset={() => resetClock('metal')}
-					/>
-					<MonsterClock
-						label="Shock"
-						current={monster.clocks.shock.current}
-						max={monster.clocks.shock.max}
-						on:reset={() => resetClock('shock')}
-					/>
-					<MonsterClock
-						label="Slime"
-						current={monster.clocks.slime.current}
-						max={monster.clocks.slime.max}
-						on:reset={() => resetClock('slime')}
-					/>
-					<MonsterClock
-						label="Snooze"
-						current={monster.clocks.snooze.current}
-						max={monster.clocks.snooze.max}
-						on:reset={() => resetClock('snooze')}
-					/>
-					<MonsterClock
-						label="Stagger"
-						current={monster.clocks.stagger.current}
-						max={monster.clocks.stagger.max}
-						on:reset={() => resetClock('stagger')}
-					/>
-					<MonsterClock
-						label="Stun"
-						current={monster.clocks.stun.current}
-						max={monster.clocks.stun.max}
-						on:reset={() => resetClock('stun')}
-					/>
-					<MonsterClock
-						label="Venom"
-						current={monster.clocks.venom.current}
-						max={monster.clocks.venom.max}
-						on:reset={() => resetClock('venom')}
-					/>
+					<div class="flex flex-wrap gap-4">
+						<MonsterClock
+							label="Bleed"
+							current={monster.clocks.bleed.current}
+							max={monster.clocks.bleed.max}
+							on:reset={() => resetClock('bleed')}
+						/>
+						<MonsterClock
+							label="Fire"
+							current={monster.clocks.fire.current}
+							max={monster.clocks.ice.max}
+							on:reset={() => resetClock('fire')}
+						/>
+						<MonsterClock
+							label="Ice"
+							current={monster.clocks.ice.current}
+							max={monster.clocks.ice.max}
+							on:reset={() => resetClock('ice')}
+						/>
+						<MonsterClock
+							label="Metal"
+							current={monster.clocks.metal.current}
+							max={monster.clocks.metal.max}
+							on:reset={() => resetClock('metal')}
+						/>
+						<MonsterClock
+							label="Shock"
+							current={monster.clocks.shock.current}
+							max={monster.clocks.shock.max}
+							on:reset={() => resetClock('shock')}
+						/>
+						<MonsterClock
+							label="Slime"
+							current={monster.clocks.slime.current}
+							max={monster.clocks.slime.max}
+							on:reset={() => resetClock('slime')}
+						/>
+						<MonsterClock
+							label="Snooze"
+							current={monster.clocks.snooze.current}
+							max={monster.clocks.snooze.max}
+							on:reset={() => resetClock('snooze')}
+						/>
+						<MonsterClock
+							label="Stagger"
+							current={monster.clocks.stagger.current}
+							max={monster.clocks.stagger.max}
+							on:reset={() => resetClock('stagger')}
+						/>
+						<MonsterClock
+							label="Stun"
+							current={monster.clocks.stun.current}
+							max={monster.clocks.stun.max}
+							on:reset={() => resetClock('stun')}
+						/>
+						<MonsterClock
+							label="Venom"
+							current={monster.clocks.venom.current}
+							max={monster.clocks.venom.max}
+							on:reset={() => resetClock('venom')}
+						/>
+					</div>
 				</div>
 			</div>
 			<div class="divider divider-horizontal"></div>
