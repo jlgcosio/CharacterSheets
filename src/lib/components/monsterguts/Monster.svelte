@@ -133,8 +133,8 @@
 		<div class="divider"></div>
 
 		<h3>Stats</h3>
-		<section class="flex flex-wrap gap-4 md:flex-nowrap">
-			<div class="flex flex-auto flex-col gap-4">
+		<section class="grid grid-flow-row grid-cols-2 gap-6">
+			<div class="col-span-2 flex flex-col gap-4 sm:col-span-1">
 				<label class="form-control">
 					<span class="label-text">Body</span>
 					<div class="join">
@@ -234,8 +234,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="divider divider-horizontal"></div>
-			<div class="flex flex-auto flex-col gap-2">
+			<div class="col-span-2 flex flex-col gap-2 sm:col-span-1">
 				<div class="flex items-center justify-between">
 					<span class="label-text">Parts</span>
 					<button class="btn" on:click={addNewPart}>Add new part</button>

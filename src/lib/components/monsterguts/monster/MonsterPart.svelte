@@ -27,7 +27,7 @@
 		/>
 		<input
 			type="number"
-			class="input join-item input-bordered max-w-36"
+			class="input join-item input-bordered max-w-24"
 			bind:value={part.values.current}
 		/>
 		<div class="input join-item input-bordered flex items-center justify-center p-4">
@@ -35,7 +35,7 @@
 		</div>
 		<input
 			type="number"
-			class="input join-item input-bordered max-w-36"
+			class="input join-item input-bordered max-w-24"
 			bind:value={part.values.max}
 		/>
 		<select class="join-item select select-bordered" bind:value={part.type}>
