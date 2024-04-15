@@ -15,8 +15,55 @@
 		| 'stagger'
 		| 'stun'
 		| 'venom';
+	type ClockItem = {
+		label: string;
+		property: ClockType;
+	};
 
 	export let monster: IMonster;
+
+	const clockList: ClockItem[] = [
+		{
+			label: 'Bleed',
+			property: 'bleed'
+		},
+		{
+			label: 'Fire',
+			property: 'fire'
+		},
+		{
+			label: 'Ice',
+			property: 'ice'
+		},
+		{
+			label: 'Metal',
+			property: 'metal'
+		},
+		{
+			label: 'Shock',
+			property: 'shock'
+		},
+		{
+			label: 'Slime',
+			property: 'slime'
+		},
+		{
+			label: 'Snooze',
+			property: 'snooze'
+		},
+		{
+			label: 'Stagger',
+			property: 'stagger'
+		},
+		{
+			label: 'Stun',
+			property: 'stun'
+		},
+		{
+			label: 'Venom',
+			property: 'venom'
+		}
+	];
 
 	function addTag() {
 		monster.tags = [
@@ -81,6 +128,20 @@
 
 		// Remove anchor from body
 		document.body.removeChild(a);
+	}
+
+	function updateClock(type: ClockType, values: { current: number; max: number }) {
+		monster.clocks[type] = {
+			...monster.clocks[type],
+			...values
+		};
+	}
+
+	function updateImmunity(type: ClockType, checked: boolean) {
+		monster.clocks[type] = {
+			...monster.clocks[type],
+			immune: checked
+		};
 	}
 </script>
 
@@ -156,81 +217,27 @@
 				<div class="form-control">
 					<span class="label-text">Immunities</span>
 					<div class="flex gap-6">
-						<MonsterImmunity label="Bleed" immunity={monster.clocks.bleed.immune} />
-						<MonsterImmunity label="Fire" immunity={monster.clocks.fire.immune} />
-						<MonsterImmunity label="Ice" immunity={monster.clocks.ice.immune} />
-						<MonsterImmunity label="Metal" immunity={monster.clocks.metal.immune} />
-						<MonsterImmunity label="Shock" immunity={monster.clocks.shock.immune} />
-						<MonsterImmunity label="Slime" immunity={monster.clocks.slime.immune} />
-						<MonsterImmunity label="Snooze" immunity={monster.clocks.snooze.immune} />
-						<MonsterImmunity label="Stagger" immunity={monster.clocks.stagger.immune} />
-						<MonsterImmunity label="Stun" immunity={monster.clocks.stun.immune} />
-						<MonsterImmunity label="Venom" immunity={monster.clocks.venom.immune} />
+						{#each clockList as clock}
+							<MonsterImmunity
+								label={clock.label}
+								immunity={monster.clocks[clock.property].immune}
+								on:change={(e) => updateImmunity(clock.property, e.detail)}
+							/>
+						{/each}
 					</div>
 				</div>
 				<div class="form-control">
 					<span class="label-text">Clocks</span>
 					<div class="flex flex-wrap gap-4">
-						<MonsterClock
-							label="Bleed"
-							current={monster.clocks.bleed.current}
-							max={monster.clocks.bleed.max}
-							on:reset={() => resetClock('bleed')}
-						/>
-						<MonsterClock
-							label="Fire"
-							current={monster.clocks.fire.current}
-							max={monster.clocks.ice.max}
-							on:reset={() => resetClock('fire')}
-						/>
-						<MonsterClock
-							label="Ice"
-							current={monster.clocks.ice.current}
-							max={monster.clocks.ice.max}
-							on:reset={() => resetClock('ice')}
-						/>
-						<MonsterClock
-							label="Metal"
-							current={monster.clocks.metal.current}
-							max={monster.clocks.metal.max}
-							on:reset={() => resetClock('metal')}
-						/>
-						<MonsterClock
-							label="Shock"
-							current={monster.clocks.shock.current}
-							max={monster.clocks.shock.max}
-							on:reset={() => resetClock('shock')}
-						/>
-						<MonsterClock
-							label="Slime"
-							current={monster.clocks.slime.current}
-							max={monster.clocks.slime.max}
-							on:reset={() => resetClock('slime')}
-						/>
-						<MonsterClock
-							label="Snooze"
-							current={monster.clocks.snooze.current}
-							max={monster.clocks.snooze.max}
-							on:reset={() => resetClock('snooze')}
-						/>
-						<MonsterClock
-							label="Stagger"
-							current={monster.clocks.stagger.current}
-							max={monster.clocks.stagger.max}
-							on:reset={() => resetClock('stagger')}
-						/>
-						<MonsterClock
-							label="Stun"
-							current={monster.clocks.stun.current}
-							max={monster.clocks.stun.max}
-							on:reset={() => resetClock('stun')}
-						/>
-						<MonsterClock
-							label="Venom"
-							current={monster.clocks.venom.current}
-							max={monster.clocks.venom.max}
-							on:reset={() => resetClock('venom')}
-						/>
+						{#each clockList as clock}
+							<MonsterClock
+								label={clock.label}
+								current={monster.clocks[clock.property].current}
+								max={monster.clocks[clock.property].max}
+								on:reset={() => resetClock(clock.property)}
+								on:change={(e) => updateClock(clock.property, e.detail)}
+							/>
+						{/each}
 					</div>
 				</div>
 			</div>
