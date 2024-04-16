@@ -24,12 +24,13 @@
 <label class="form-control flex-1">
 	<span class="label-text">{label}</span>
 	<div class=" flex gap-2">
-		<div class="join">
+		<div class="join {current === max ? 'ring' : ''}">
 			<input
 				type="number"
 				class="input join-item input-bordered max-w-16"
 				bind:value={current}
 				on:change={onChange}
+				min={0}
 			/>
 			<div class="input join-item input-bordered flex items-center justify-center p-4">
 				<span>/</span>
