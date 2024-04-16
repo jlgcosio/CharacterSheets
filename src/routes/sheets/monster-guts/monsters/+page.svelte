@@ -14,9 +14,7 @@
 			for (let index = 0; index < files.length; index++) {
 				const file = await files[index].text();
 				const mon = JSON.parse(file) as unknown as IMonster;
-				if (monsterList.findIndex((m) => m.id === mon.id) === -1) {
-					list.push(mon);
-				}
+				list.push(mon);
 			}
 			monsterList = [...monsterList, ...list];
 		}
