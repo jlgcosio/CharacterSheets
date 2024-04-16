@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { shapeAsValidMonster } from '$lib/utils/monsterguts.utils';
+	import { createBlankMonster, shapeAsValidMonster } from '$lib/utils/monsterguts.utils';
 	import Monster from '$lib/components/monsterguts/Monster.svelte';
 	import type { IMonster } from '$lib/types/MonsterGutsTypes';
 
@@ -15,7 +15,6 @@
 			for (let index = 0; index < files.length; index++) {
 				const file = await files[index].text();
 				const mon = JSON.parse(file) as unknown as IMonster;
-				console.log(shapeAsValidMonster(mon));
 				list.push(shapeAsValidMonster(mon));
 			}
 			monsterList = [...monsterList, ...list];
@@ -23,99 +22,7 @@
 	}
 
 	function addMonster() {
-		monsterList = [
-			...monsterList,
-			{
-				id: `monster-${Date.now()}`,
-				name: 'New Monster',
-				description: '',
-				rage: '',
-				tags: [],
-				moves: [],
-				body: {
-					current: 50,
-					max: 50
-				},
-				parts: [],
-				clocks: {
-					bleed: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					fire: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					ice: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					metal: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					shock: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					slime: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					snooze: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					stagger: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					stun: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					venom: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					dragon: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					defensedown: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					water: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					webbed: {
-						current: 0,
-						max: 6,
-						immune: false
-					},
-					soiled: {
-						current: 0,
-						max: 6,
-						immune: false
-					}
-				}
-			}
-		];
+		monsterList = [...monsterList, createBlankMonster()];
 	}
 </script>
 

@@ -4,6 +4,7 @@
 	import MonsterClock from './monster/MonsterClock.svelte';
 	import MonsterPart from './monster/MonsterPart.svelte';
 	import MonsterMove from './monster/MonsterMove.svelte';
+	import { createBlankMonsterMove, createBlankMonsterPart } from '$lib/utils/monsterguts.utils';
 	type ClockType =
 		| 'bleed'
 		| 'fire'
@@ -109,18 +110,7 @@
 	}
 
 	function addNewPart() {
-		monster.parts = [
-			...monster.parts,
-			{
-				name: '',
-				broken: false,
-				type: 'Hard',
-				values: {
-					current: 0,
-					max: 0
-				}
-			}
-		];
+		monster.parts = [...monster.parts, createBlankMonsterPart()];
 	}
 
 	function deletePart(index: number) {
@@ -128,14 +118,7 @@
 	}
 
 	function addMove() {
-		monster.moves = [
-			...monster.moves,
-			{
-				name: '',
-				description: '',
-				harm: 0
-			}
-		];
+		monster.moves = [...monster.moves, createBlankMonsterMove()];
 	}
 
 	function deleteMove(index: number) {

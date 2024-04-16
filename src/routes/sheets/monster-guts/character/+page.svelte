@@ -4,6 +4,11 @@
 
 	import Weapon from '$lib/components/monsterguts/Weapon.svelte';
 	import EquipmentTag from '$lib/components/monsterguts/EquipmentTag.svelte';
+	import {
+		createBlankCharacter,
+		createBlankEquipmentTag,
+		createBlankWeapon
+	} from '$lib/utils/monsterguts.utils';
 
 	export let data: PageData;
 
@@ -29,17 +34,7 @@
 
 	function createNewCharacter() {
 		// Note: definte new constant instead of making defaults. Using defaults will result in same reference that will propagate to new defined characters
-		const newChar: ICharacter = {
-			name: 'New Character',
-			img: '',
-			weapons: [],
-			activeWeapon: 0,
-			equipment: {
-				tags: []
-			},
-			notes: '',
-			id: Date.now()
-		};
+		const newChar: ICharacter = createBlankCharacter();
 		characterList = [...characterList, newChar];
 		selectedCharacter = newChar;
 		dirty = true;
@@ -58,28 +53,7 @@
 	}
 
 	function addWeapon() {
-		const newWeapon: IWeapon = {
-			blisters: 0,
-			health: {
-				current: 0,
-				max: 0
-			},
-			crush: 0,
-			slice: 0,
-			pierce: 0,
-			weaponName: 'New Weapon',
-			weaponTags: [],
-			passive: {
-				name: 'Passive',
-				description: 'Passive effect description'
-			},
-			resource: {
-				current: 0,
-				max: 0
-			},
-			resourceType: 'Edge',
-			moves: []
-		};
+		const newWeapon: IWeapon = createBlankWeapon();
 		selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
 		selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
 		dirty = true;
@@ -99,13 +73,10 @@
 	}
 
 	function addEquipmentTag() {
-		const newTag: IEquipmentTag = {
-			name: '',
-			description: '',
-			type: 'Elemental',
-			equipped: false
-		};
-		selectedCharacter.equipment.tags = [...selectedCharacter.equipment.tags, newTag];
+		selectedCharacter.equipment.tags = [
+			...selectedCharacter.equipment.tags,
+			createBlankEquipmentTag()
+		];
 	}
 
 	function deleteEquipmentTag(index: number) {
@@ -117,7 +88,6 @@
 
 	function updateEquipmentTag(tag: IEquipmentTag, index: number) {
 		selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.map((t, i) => {
-			console.log(t, i === index);
 			return i === index ? tag : t;
 		});
 		dirty = true;

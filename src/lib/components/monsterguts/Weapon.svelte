@@ -2,6 +2,7 @@
 	import type { IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
 	import { createEventDispatcher } from 'svelte';
 	import WeaponTag from '$lib/components/monsterguts/WeaponTag.svelte';
+	import { createBlankEquipmentTag } from '$lib/utils/monsterguts.utils';
 
 	const dispatch = createEventDispatcher<{ change: IWeapon; delete: any }>();
 
@@ -35,12 +36,7 @@
 	}
 
 	function addTag() {
-		const newTag: IEquipmentTag = {
-			name: '',
-			description: '',
-			type: 'Equipment'
-		};
-		weapon.weaponTags = [...weapon.weaponTags, newTag];
+		weapon.weaponTags = [...weapon.weaponTags, createBlankEquipmentTag()];
 	}
 
 	function deleteTag(index: number) {
