@@ -87,6 +87,31 @@
 						current: 0,
 						max: 6,
 						immune: false
+					},
+					dragon: {
+						current: 0,
+						max: 6,
+						immune: false
+					},
+					defensedown: {
+						current: 0,
+						max: 6,
+						immune: false
+					},
+					water: {
+						current: 0,
+						max: 6,
+						immune: false
+					},
+					webbed: {
+						current: 0,
+						max: 6,
+						immune: false
+					},
+					soiled: {
+						current: 0,
+						max: 6,
+						immune: false
 					}
 				}
 			}

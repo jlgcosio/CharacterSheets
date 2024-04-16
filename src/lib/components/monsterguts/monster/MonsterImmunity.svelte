@@ -11,7 +11,7 @@
 	export let immunity: boolean = false;
 </script>
 
-<div class="form-control items-center">
+<div class="form-control col-span-1 items-center">
 	<span class="label-text">{label}</span>
 	<input
 		type="checkbox"

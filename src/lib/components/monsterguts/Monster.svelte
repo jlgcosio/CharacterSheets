@@ -14,7 +14,12 @@
 		| 'snooze'
 		| 'stagger'
 		| 'stun'
-		| 'venom';
+		| 'venom'
+		| 'dragon'
+		| 'water'
+		| 'soiled'
+		| 'defensedown'
+		| 'webbed';
 	type ClockItem = {
 		label: string;
 		property: ClockType;
@@ -62,6 +67,26 @@
 		{
 			label: 'Venom',
 			property: 'venom'
+		},
+		{
+			label: 'Dragonblight',
+			property: 'dragon'
+		},
+		{
+			label: 'Waterblight',
+			property: 'water'
+		},
+		{
+			label: 'Soiled',
+			property: 'soiled'
+		},
+		{
+			label: 'Defense Down',
+			property: 'defensedown'
+		},
+		{
+			label: 'Webbed',
+			property: 'webbed'
 		}
 	];
 
@@ -193,11 +218,11 @@
 		</div>
 		<div class="divider"></div>
 
-		<h3>Stats</h3>
+		<h3 class="text-xl">Stats</h3>
 		<section class="grid grid-flow-row grid-cols-2 gap-6">
 			<div class="col-span-2 flex flex-col gap-4 sm:col-span-1">
 				<label class="form-control">
-					<span class="label-text">Body</span>
+					<span class="label-text"><b>Body</b></span>
 					<div class="join">
 						<input
 							type="number"
@@ -215,8 +240,8 @@
 					</div>
 				</label>
 				<div class="form-control">
-					<span class="label-text">Immunities</span>
-					<div class="flex gap-6">
+					<span class="label-text"><b>Immunities</b></span>
+					<div class="grid grid-cols-3 gap-4 sm:grid-cols-6">
 						{#each clockList as clock}
 							<MonsterImmunity
 								label={clock.label}
@@ -227,7 +252,7 @@
 					</div>
 				</div>
 				<div class="form-control">
-					<span class="label-text">Clocks</span>
+					<span class="label-text"><b>Clocks</b></span>
 					<div class="flex flex-wrap gap-4">
 						{#each clockList as clock}
 							<MonsterClock
@@ -243,7 +268,7 @@
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 sm:col-span-1">
 				<div class="flex items-center justify-between">
-					<span class="label-text">Parts</span>
+					<span class="label-text"><b>Parts</b></span>
 					<button class="btn" on:click={addNewPart}>Add new part</button>
 				</div>
 				{#each monster.parts as part, i}
@@ -251,7 +276,7 @@
 				{/each}
 
 				<div class="flex items-center justify-between">
-					<span class="label-text">Moves</span>
+					<span class="label-text"><b>Moves</b></span>
 					<button class="btn" on:click={addMove}>Add new move</button>
 				</div>
 				{#each monster.moves as move, i}

@@ -119,5 +119,10 @@ export interface IMonster {
 		stagger: IClock,
 		stun: IClock,
 		venom: IClock,
+		dragon: IClock,
+		water: IClock,
+		defensedown: IClock,
+		soiled: IClock,
+		webbed: IClock,
 	}
 }
