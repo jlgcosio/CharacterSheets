@@ -170,9 +170,13 @@
 	}
 </script>
 
-<section class="card mt-4 flex flex-col flex-wrap gap-4 shadow-xl">
-	<div class="card-body max-w-full">
-		<div class="flex flex-wrap gap-4">
+<section class="collapse collapse-arrow mt-4 shadow-md">
+	<input type="checkbox" />
+	<div class="collapse-title flex justify-between text-xl">
+		{monster.name}
+	</div>
+	<div class="collapse-content">
+		<div class="mb-4 flex flex-wrap gap-4">
 			<div class="flex-auto">
 				<label class="form-control">
 					<span class="label-text">Name</span>

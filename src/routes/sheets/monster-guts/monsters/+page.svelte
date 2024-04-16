@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isValidMonster } from '$lib/utils/monsterguts.utils';
 	import Monster from 'components/monsterguts/Monster.svelte';
 	import type { IMonster } from 'libTypes/MonsterGutsTypes';
 
@@ -14,7 +15,9 @@
 			for (let index = 0; index < files.length; index++) {
 				const file = await files[index].text();
 				const mon = JSON.parse(file) as unknown as IMonster;
-				list.push(mon);
+				if (isValidMonster(mon)) {
+					list.push(mon);
+				}
 			}
 			monsterList = [...monsterList, ...list];
 		}
@@ -25,7 +28,7 @@
 			...monsterList,
 			{
 				id: `monster-${Date.now()}`,
-				name: '',
+				name: 'New Monster',
 				description: '',
 				rage: '',
 				tags: [],
