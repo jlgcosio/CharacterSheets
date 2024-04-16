@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { PageData } from '../$types';
-	import type { ICharacter, IEquipmentTag, IWeapon } from 'libTypes/MonsterGutsTypes';
+	import type { ICharacter, IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
 
-	import Weapon from 'components/monsterguts/Weapon.svelte';
-	import EquipmentTag from 'components/monsterguts/EquipmentTag.svelte';
+	import Weapon from '$lib/components/monsterguts/Weapon.svelte';
+	import EquipmentTag from '$lib/components/monsterguts/EquipmentTag.svelte';
 
 	export let data: PageData;
 

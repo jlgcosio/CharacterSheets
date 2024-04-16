@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { isValidMonster } from '$lib/utils/monsterguts.utils';
-	import Monster from 'components/monsterguts/Monster.svelte';
-	import type { IMonster } from 'libTypes/MonsterGutsTypes';
+	import { shapeAsValidMonster } from '$lib/utils/monsterguts.utils';
+	import Monster from '$lib/components/monsterguts/Monster.svelte';
+	import type { IMonster } from '$lib/types/MonsterGutsTypes';
 
 	// import type { PageData } from './$types';
 
@@ -15,9 +15,8 @@
 			for (let index = 0; index < files.length; index++) {
 				const file = await files[index].text();
 				const mon = JSON.parse(file) as unknown as IMonster;
-				if (isValidMonster(mon)) {
-					list.push(mon);
-				}
+				console.log(shapeAsValidMonster(mon));
+				list.push(shapeAsValidMonster(mon));
 			}
 			monsterList = [...monsterList, ...list];
 		}

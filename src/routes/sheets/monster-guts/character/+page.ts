@@ -1,4 +1,4 @@
-import type { ICharacter } from 'libTypes/MonsterGutsTypes';
+import type { ICharacter } from '$lib/types/MonsterGutsTypes';
 import type { PageLoad } from '../$types';
 
 

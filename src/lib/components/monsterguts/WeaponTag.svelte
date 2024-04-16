@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IEquipmentTag } from 'libTypes/MonsterGutsTypes';
+	import type { IEquipmentTag } from '$lib/types/MonsterGutsTypes';
 	import { createEventDispatcher } from 'svelte';
 
 	interface WeaponTagsDispatch {

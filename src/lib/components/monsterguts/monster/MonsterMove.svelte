@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IMonsterMove, IMonsterPart } from 'libTypes/MonsterGutsTypes';
+	import type { IMonsterMove, IMonsterPart } from '$lib/types/MonsterGutsTypes';
 	import { createEventDispatcher } from 'svelte';
 
 	interface MonsterPartDispatch {

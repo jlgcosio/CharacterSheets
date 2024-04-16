@@ -1,4 +1,4 @@
-import { Resource, CompanionBreed } from 'libEnums/MonsterGutsEnums';
+import { Resource, CompanionBreed } from '$lib/enums/MonsterGutsEnums';
 
 export interface IClock {
 	current: number,

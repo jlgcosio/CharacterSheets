@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { IEquipmentTag, IWeapon } from 'libTypes/MonsterGutsTypes';
+	import type { IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
 	import { createEventDispatcher } from 'svelte';
-	import WeaponTag from './WeaponTag.svelte';
+	import WeaponTag from '$lib/components/monsterguts/WeaponTag.svelte';
 
 	const dispatch = createEventDispatcher<{ change: IWeapon; delete: any }>();
 

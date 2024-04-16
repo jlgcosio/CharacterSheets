@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IMonster, IMonsterTag } from 'libTypes/MonsterGutsTypes';
+	import type { IMonster, IMonsterTag } from '$lib/types/MonsterGutsTypes';
 	import MonsterImmunity from './monster/MonsterImmunity.svelte';
 	import MonsterClock from './monster/MonsterClock.svelte';
 	import MonsterPart from './monster/MonsterPart.svelte';
