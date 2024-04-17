@@ -1,4 +1,4 @@
-import type { IEquipmentTag } from "libTypes/MonsterGutsTypes";
+import type { IEquipmentTag } from "$lib/types/MonsterGutsTypes";
 
 export const WeaponTags: IEquipmentTag[] = [
     {
