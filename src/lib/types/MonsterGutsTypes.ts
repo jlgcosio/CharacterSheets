@@ -1,16 +1,16 @@
 import { Resource, CompanionBreed } from '$lib/enums/MonsterGutsEnums';
 
 export interface IClock {
-	current: number,
-	max: number,
-	immune: boolean
+	current: number;
+	max: number;
+	immune: boolean;
 }
 
 export interface IEquipmentTag {
 	name: string;
 	description: string;
 	type: 'Ephemera' | 'Elemental' | 'Effect' | 'Equipment';
-	equipped?: boolean
+	equipped?: boolean;
 }
 
 export interface IEquipment {
@@ -42,7 +42,7 @@ export interface IWeapon {
 		current: number;
 		max: number;
 	};
-	resourceType: 'Edge' | 'Ammo' | 'Melody';
+	resourceType: Resource;
 	weaponTags: IEquipmentTag[];
 	passive: IWeaponPassive;
 	moves: IWeaponMove[];
@@ -55,24 +55,24 @@ export interface ICompanionTool {
 }
 
 export interface IMonsterPart {
-	name: string,
-	type: 'Hard' | 'Soft',
+	name: string;
+	type: 'Hard' | 'Soft';
 	values: {
-		current: number,
-		max: number
-	}
-	broken: boolean
+		current: number;
+		max: number;
+	};
+	broken: boolean;
 }
 
 export interface IMonsterMove {
-	name: string,
-	description: string,
-	harm: number
+	name: string;
+	description: string;
+	harm: number;
 }
 
 export interface IMonsterTag {
-	name: string,
-	desciption: string
+	name: string;
+	desciption: string;
 }
 
 // High level types
@@ -87,7 +87,7 @@ export interface ICharacter {
 	activeWeapon: number; // search by weapon name
 	img: string;
 	equipment: IEquipment;
-	notes: string
+	notes: string;
 }
 
 export interface ICompanion {
@@ -97,32 +97,32 @@ export interface ICompanion {
 }
 
 export interface IMonster {
-	id: string,
-	name: string,
-	description: string,
-	rage: string,
-	tags: IMonsterTag[],
-	moves: IMonsterMove[],
+	id: string;
+	name: string;
+	description: string;
+	rage: string;
+	tags: IMonsterTag[];
+	moves: IMonsterMove[];
 	body: {
-		current: number,
-		max: number
-	},
-	parts: IMonsterPart[]
+		current: number;
+		max: number;
+	};
+	parts: IMonsterPart[];
 	clocks: {
-		bleed: IClock,
-		fire: IClock,
-		ice: IClock,
-		metal: IClock,
-		shock: IClock,
-		slime: IClock,
-		snooze: IClock,
-		stagger: IClock,
-		stun: IClock,
-		venom: IClock,
-		dragon: IClock,
-		water: IClock,
-		defensedown: IClock,
-		soiled: IClock,
-		webbed: IClock,
-	}
+		bleed: IClock;
+		fire: IClock;
+		ice: IClock;
+		metal: IClock;
+		shock: IClock;
+		slime: IClock;
+		snooze: IClock;
+		stagger: IClock;
+		stun: IClock;
+		venom: IClock;
+		dragon: IClock;
+		water: IClock;
+		defensedown: IClock;
+		soiled: IClock;
+		webbed: IClock;
+	};
 }

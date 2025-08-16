@@ -1,32 +1,28 @@
 <script lang="ts">
 	import type { IEquipmentTag } from '$lib/types/MonsterGutsTypes';
-	import { createEventDispatcher } from 'svelte';
 
-	interface WeaponTagsDispatch {
-		change: IEquipmentTag;
-		remove: undefined;
+	interface Props {
+		tag: IEquipmentTag;
+		onChange(tag: IEquipmentTag): void;
+		onRemove(): void;
 	}
 
-	const dispatch = createEventDispatcher<WeaponTagsDispatch>();
-
-	export let tag: IEquipmentTag;
-	let tagCopy = tag;
-	let dirty = false;
+	let { tag = $bindable(), onChange, onRemove }: Props = $props();
+	let tagCopy = $state(tag);
+	let dirty = $state(false);
 
 	// Update this list when expanding ITag:types property
 	const tagOptions = ['Ephemera', 'Elemental', 'Effect', 'Equipment'];
 
-	$: if (dirty) {
-		dispatch('change', tagCopy);
-		dirty = false;
-	}
+	$effect(() => {
+		if (dirty) {
+			onChange(tagCopy);
+			dirty = false;
+		}
+	});
 
 	function toggleDirty() {
 		dirty = !dirty;
-	}
-
-	function deleteTag() {
-		dispatch('remove');
 	}
 </script>
 
@@ -41,7 +37,7 @@
 		<select
 			class="select select-bordered"
 			bind:value={tagCopy.type}
-			on:change={() => {
+			onchange={() => {
 				if (tagCopy.type === 'Equipment' || tagCopy.type === 'Ephemera') {
 					tagCopy.equipped = undefined;
 				} else {
@@ -60,14 +56,14 @@
 		class="input input-bordered"
 		placeholder="Tag"
 		bind:value={tagCopy.name}
-		on:change={toggleDirty}
+		onchange={toggleDirty}
 	/>
 	<input
 		type="text"
 		class="input input-bordered flex-1"
 		placeholder="Tag Description"
 		bind:value={tagCopy.description}
-		on:change={toggleDirty}
+		onchange={toggleDirty}
 	/>
-	<button class="btn btn-error" on:click={deleteTag}>X</button>
+	<button class="btn btn-error" onclick={onRemove}>X</button>
 </div>

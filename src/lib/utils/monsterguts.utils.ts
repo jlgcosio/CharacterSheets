@@ -1,3 +1,4 @@
+import { Resource } from '$lib/enums/MonsterGutsEnums';
 import type {
 	ICharacter,
 	IEquipmentTag,
@@ -36,7 +37,7 @@ export function createBlankWeapon(): IWeapon {
 			current: 0,
 			max: 0
 		},
-		resourceType: 'Edge',
+		resourceType: Resource.Edge,
 		moves: []
 	};
 }

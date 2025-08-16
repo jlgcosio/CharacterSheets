@@ -1,24 +1,29 @@
 <script lang="ts">
 	import type { IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
-	import { createEventDispatcher } from 'svelte';
 	import WeaponTag from '$lib/components/monsterguts/WeaponTag.svelte';
 	import { createBlankEquipmentTag } from '$lib/utils/monsterguts.utils';
 
-	const dispatch = createEventDispatcher<{ change: IWeapon; delete: any }>();
+	interface Props {
+		weapon: IWeapon;
+		onChange: (weapon: IWeapon) => void;
+		onDelete: () => void;
+	}
 
-	export let weapon: IWeapon;
-	let dirty = false;
+	let { weapon = $bindable(), onChange, onDelete }: Props = $props();
+	let dirty = $state(false);
+
+	$effect(() => {
+		if (dirty) {
+			onChange(weapon);
+			dirty = false;
+		}
+	});
 
 	// Update this list when expanding IWeapon:resourceTypes property
 	const resourceTypes = ['Edge', 'Ammo', 'Melody'];
 
 	function removeWeapon() {
-		dispatch('delete');
-	}
-
-	$: if (dirty) {
-		dispatch('change', weapon);
-		dirty = false;
+		onDelete();
 	}
 
 	function toggleDirty() {
@@ -48,7 +53,6 @@
 		weapon = {
 			...weapon,
 			weaponTags: weapon.weaponTags.map((t, i) => {
-				console.log(t, i === index);
 				return i === index ? tag : t;
 			})
 		};
@@ -64,9 +68,9 @@
 				class="input input-bordered flex-1"
 				placeholder="Weapon name"
 				bind:value={weapon.weaponName}
-				on:change={toggleDirty}
+				onchange={toggleDirty}
 			/>
-			<button class="btn btn-warning" on:click={removeWeapon}>Delete</button>
+			<button class="btn btn-warning" onclick={removeWeapon}>Delete</button>
 		</div>
 	</div>
 	<div class="flex flex-col flex-wrap gap-4 xl:flex-row">
@@ -80,7 +84,7 @@
 							class="input join-item input-bordered"
 							bind:value={weapon.health.current}
 							min={0}
-							on:change={toggleDirty}
+							onchange={toggleDirty}
 						/>
 						<div class="input join-item input-bordered flex items-center justify-center p-4">
 							<span>/</span>
@@ -90,10 +94,10 @@
 							class="input join-item input-bordered"
 							bind:value={weapon.health.max}
 							min={0}
-							on:change={toggleDirty}
+							onchange={toggleDirty}
 						/>
 					</div>
-					<button class="btn" on:click={resetHp}>Reset HP</button>
+					<button class="btn" onclick={resetHp}>Reset HP</button>
 				</div>
 			</label>
 			<label class="form-control">
@@ -103,7 +107,7 @@
 						<select
 							class="join-item select select-bordered"
 							bind:value={weapon.resourceType}
-							on:change={toggleDirty}
+							onchange={toggleDirty}
 						>
 							{#each resourceTypes as type}
 								<option value={type}>{type}</option>
@@ -114,7 +118,7 @@
 							class="input join-item input-bordered"
 							bind:value={weapon.resource.current}
 							min={0}
-							on:change={toggleDirty}
+							onchange={toggleDirty}
 						/>
 						<div class="input join-item input-bordered flex items-center justify-center p-4">
 							<span>/</span>
@@ -124,10 +128,10 @@
 							class="input join-item input-bordered"
 							bind:value={weapon.resource.max}
 							min={0}
-							on:change={toggleDirty}
+							onchange={toggleDirty}
 						/>
 					</div>
-					<button class="variant-outline btn" on:click={resetResource}
+					<button class="variant-outline btn" onclick={resetResource}
 						>Reset {weapon.resourceType}</button
 					>
 				</div>
@@ -142,14 +146,14 @@
 						class="input input-bordered"
 						placeholder="Passive Effect"
 						bind:value={weapon.passive.name}
-						on:change={toggleDirty}
+						onchange={toggleDirty}
 					/>
 					<input
 						type="text"
 						class="input input-bordered flex-1"
 						placeholder="Effect Description"
 						bind:value={weapon.passive.description}
-						on:change={toggleDirty}
+						onchange={toggleDirty}
 					/>
 				</div>
 			</label>
@@ -164,7 +168,7 @@
 					class="input input-bordered"
 					bind:value={weapon.crush}
 					min={0}
-					on:change={toggleDirty}
+					onchange={toggleDirty}
 				/>
 			</label>
 		</div>
@@ -176,7 +180,7 @@
 					class="input input-bordered"
 					bind:value={weapon.slice}
 					min={0}
-					on:change={toggleDirty}
+					onchange={toggleDirty}
 				/>
 			</label>
 		</div>
@@ -188,7 +192,7 @@
 					class="input input-bordered"
 					bind:value={weapon.pierce}
 					min={0}
-					on:change={toggleDirty}
+					onchange={toggleDirty}
 				/>
 			</label>
 		</div>
@@ -196,11 +200,15 @@
 	<div class="form-control w-full gap-4">
 		<div class="flex items-center gap-4">
 			<h3>Weapon Tags</h3>
-			<button class="btn" on:click={addTag}>Add Tag</button>
+			<button class="btn" onclick={addTag}>Add Tag</button>
 		</div>
 		<div class="flex flex-col flex-wrap gap-2">
 			{#each weapon.weaponTags as tag, i}
-				<WeaponTag {tag} on:change={(e) => updateTag(e.detail, i)} on:remove={() => deleteTag(i)} />
+				<WeaponTag
+					bind:tag={weapon.weaponTags[i]}
+					onChange={(e) => updateTag(e, i)}
+					onRemove={() => deleteTag(i)}
+				/>
 			{/each}
 		</div>
 	</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from '../$types';
+	import type { PageProps } from './$types';
 	import type { ICharacter, IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
 
 	import Weapon from '$lib/components/monsterguts/Weapon.svelte';
@@ -10,27 +10,31 @@
 		createBlankWeapon
 	} from '$lib/utils/monsterguts.utils';
 
-	export let data: PageData;
+	let { data }: PageProps = $props();
 
-	let characterList: ICharacter[] = data.characterList;
+	let characterList: ICharacter[] = $state(data.characterList);
 
-	$: if (dirty) {
-		if (selectedCharacter) {
-			characterList = characterList.map((character) => {
-				return character.id === selectedCharacter.id ? selectedCharacter : character;
-			});
+	$effect(() => {
+		if (dirty) {
+			if (selectedCharacter) {
+				characterList = characterList.map((character) => {
+					return character.id === selectedCharacter?.id ? selectedCharacter : character;
+				});
+			}
+			localStorage.setItem('monster-guts', JSON.stringify(characterList));
+			dirty = false;
 		}
-		localStorage.setItem('monster-guts', JSON.stringify(characterList));
-		dirty = false;
-	}
+	});
 
 	let dirty = false;
-	let selectedCharacter: ICharacter;
-	$: console.log(selectedCharacter);
+	let selectedCharacter: ICharacter | undefined = $state();
+	$inspect(selectedCharacter);
 
-	if (characterList.length === 0) {
-		createNewCharacter();
-	}
+	$effect(() => {
+		if (characterList.length === 0) {
+			createNewCharacter();
+		}
+	});
 
 	function createNewCharacter() {
 		// Note: definte new constant instead of making defaults. Using defaults will result in same reference that will propagate to new defined characters
@@ -42,7 +46,7 @@
 
 	function deleteCharacter() {
 		if (selectedCharacter) {
-			characterList = characterList.filter((character) => character.id !== selectedCharacter.id);
+			characterList = characterList.filter((character) => character.id !== selectedCharacter?.id);
 			if (characterList.length > 0) {
 				selectedCharacter = characterList[0];
 				dirty = true;
@@ -54,43 +58,55 @@
 
 	function addWeapon() {
 		const newWeapon: IWeapon = createBlankWeapon();
-		selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
-		selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
-		dirty = true;
+		if (selectedCharacter) {
+			selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
+			selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
+			dirty = true;
+		}
 	}
 
 	function deleteWeapon(index: number) {
-		selectedCharacter.weapons = selectedCharacter.weapons.filter((w, i) => i !== index);
-		selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
-		dirty = true;
+		if (selectedCharacter) {
+			selectedCharacter.weapons = selectedCharacter.weapons.filter((w, i) => i !== index);
+			selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
+			dirty = true;
+		}
 	}
 
 	function updateWeapon(weapon: IWeapon, index: number) {
-		selectedCharacter.weapons = selectedCharacter.weapons.map((w, i) => {
-			return i === index ? weapon : w;
-		});
-		dirty = true;
+		if (selectedCharacter) {
+			selectedCharacter.weapons = selectedCharacter.weapons.map((w, i) => {
+				return i === index ? weapon : w;
+			});
+			dirty = true;
+		}
 	}
 
 	function addEquipmentTag() {
-		selectedCharacter.equipment.tags = [
-			...selectedCharacter.equipment.tags,
-			createBlankEquipmentTag()
-		];
+		if (selectedCharacter) {
+			selectedCharacter.equipment.tags = [
+				...selectedCharacter.equipment.tags,
+				createBlankEquipmentTag()
+			];
+		}
 	}
 
 	function deleteEquipmentTag(index: number) {
-		selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.filter(
-			(t, i) => i !== index
-		);
-		dirty = true;
+		if (selectedCharacter) {
+			selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.filter(
+				(t, i) => i !== index
+			);
+			dirty = true;
+		}
 	}
 
 	function updateEquipmentTag(tag: IEquipmentTag, index: number) {
-		selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.map((t, i) => {
-			return i === index ? tag : t;
-		});
-		dirty = true;
+		if (selectedCharacter) {
+			selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.map((t, i) => {
+				return i === index ? tag : t;
+			});
+			dirty = true;
+		}
 	}
 </script>
 
@@ -108,7 +124,7 @@
 			</select>
 		</div>
 		<div class="flex-2">
-			<button class="btn btn-primary" on:click={createNewCharacter}>Create new character</button>
+			<button class="btn btn-primary" onclick={createNewCharacter}>Create new character</button>
 		</div>
 	</section>
 </section>
@@ -124,7 +140,7 @@
 							type="text"
 							class="input input-bordered"
 							bind:value={selectedCharacter.name}
-							on:change={() => (dirty = true)}
+							onchange={() => (dirty = true)}
 						/>
 					</label>
 				</div>
@@ -134,8 +150,8 @@
 						<textarea
 							class="textarea textarea-bordered"
 							bind:value={selectedCharacter.notes}
-							on:change={() => (dirty = true)}
-						/>
+							onchange={() => (dirty = true)}
+						></textarea>
 					</label>
 				</div>
 			</div>
@@ -143,7 +159,7 @@
 			{#if selectedCharacter.weapons.length < 4}
 				<div class="mt-4 grid grid-cols-6">
 					<div class="col-span-1">
-						<button class="btn btn-primary" on:click={addWeapon}>Add new weapon</button>
+						<button class="btn btn-primary" onclick={addWeapon}>Add new weapon</button>
 					</div>
 				</div>
 			{/if}
@@ -156,18 +172,20 @@
 							role="tab"
 							class="tab"
 							aria-label={weapon.weaponName}
-							on:click={() => {
-								selectedCharacter.activeWeapon = index;
-								dirty = true;
+							onclick={() => {
+								if (selectedCharacter) {
+									selectedCharacter.activeWeapon = index;
+									dirty = true;
+								}
 							}}
 							checked={selectedCharacter.activeWeapon === index}
 						/>
 						<div role="tabpanel" class="tab-content rounded-box border-base-300 bg-base-100 p-6">
 							{#if selectedCharacter.activeWeapon === index}
 								<Weapon
-									{weapon}
-									on:change={(e) => updateWeapon(e.detail, index)}
-									on:delete={() => deleteWeapon(index)}
+									bind:weapon={selectedCharacter.weapons[index]}
+									onChange={(e) => updateWeapon(e, index)}
+									onDelete={() => deleteWeapon(index)}
 								/>
 							{/if}
 						</div>
@@ -179,7 +197,7 @@
 				<div class="form-control w-full gap-4">
 					<div class="flex items-center gap-4">
 						<h3>Equipment Tags</h3>
-						<button class="btn" on:click={addEquipmentTag}>Add Tag</button>
+						<button class="btn" onclick={addEquipmentTag}>Add Tag</button>
 					</div>
 					{#each selectedCharacter.equipment.tags as tag, i}
 						<div class="flex flex-col flex-wrap gap-2">
@@ -194,7 +212,7 @@
 			</div>
 		</div>
 		<div class="card-footer flex justify-end p-4">
-			<button class="btn btn-error" on:click={deleteCharacter}>Delete character</button>
+			<button class="btn btn-error" onclick={deleteCharacter}>Delete character</button>
 		</div>
 	</section>
 {/if}
