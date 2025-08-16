@@ -1,14 +1,7 @@
 import { Resource } from '$lib/enums/MonsterGutsEnums';
-import type {
-	ICharacter,
-	IEquipmentTag,
-	IMonster,
-	IMonsterMove,
-	IMonsterPart,
-	IWeapon
-} from '$lib/types/MonsterGutsTypes';
+import type { MonsterGuts } from '$lib/types/MonsterGutsTypes';
 
-export function createBlankEquipmentTag(): IEquipmentTag {
+export function createBlankEquipmentTag(): MonsterGuts.IEquipmentTag {
 	return {
 		name: '',
 		description: '',
@@ -17,7 +10,7 @@ export function createBlankEquipmentTag(): IEquipmentTag {
 	};
 }
 
-export function createBlankWeapon(): IWeapon {
+export function createBlankWeapon(): MonsterGuts.IWeapon {
 	return {
 		blisters: 0,
 		health: {
@@ -42,7 +35,7 @@ export function createBlankWeapon(): IWeapon {
 	};
 }
 
-export function createBlankCharacter(): ICharacter {
+export function createBlankCharacter(): MonsterGuts.ICharacter {
 	return {
 		name: 'New Character',
 		img: '',
@@ -56,7 +49,7 @@ export function createBlankCharacter(): ICharacter {
 	};
 }
 
-export function createBlankMonsterPart(): IMonsterPart {
+export function createBlankMonsterPart(): MonsterGuts.IMonsterPart {
 	return {
 		name: '',
 		broken: false,
@@ -68,7 +61,7 @@ export function createBlankMonsterPart(): IMonsterPart {
 	};
 }
 
-export function createBlankMonsterMove(): IMonsterMove {
+export function createBlankMonsterMove(): MonsterGuts.IMonsterMove {
 	return {
 		name: '',
 		description: '',
@@ -76,7 +69,7 @@ export function createBlankMonsterMove(): IMonsterMove {
 	};
 }
 
-export function createBlankMonster(invalid?: boolean): IMonster {
+export function createBlankMonster(invalid?: boolean): MonsterGuts.IMonster {
 	return {
 		id: `monster-${crypto.randomUUID()}`,
 		name: invalid ? 'Invalid import' : 'New Monster',
@@ -169,7 +162,7 @@ export function createBlankMonster(invalid?: boolean): IMonster {
 	};
 }
 
-export function shapeAsValidMonster(item: any): IMonster {
+export function shapeAsValidMonster(item: any): MonsterGuts.IMonster {
 	if (typeof item === 'object') {
 		console.log('shapeAsValidMonster', item);
 		const newThing = createBlankMonster(true);

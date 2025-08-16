@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { IMonsterMove } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types';
 
 	interface Props {
-		move: IMonsterMove;
+		move: MonsterGuts.IMonsterMove;
 		remove: () => void;
 	}
 

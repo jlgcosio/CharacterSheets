@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { IMonsterPart } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types';
 
 	interface Props {
-		part: IMonsterPart;
+		part: MonsterGuts.IMonsterPart;
 		remove: () => void;
 	}
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { IEquipmentTag } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types';
 
 	interface Props {
-		tag: IEquipmentTag;
-		onChange(tag: IEquipmentTag): void;
+		tag: MonsterGuts.IEquipmentTag;
+		onChange(tag: MonsterGuts.IEquipmentTag): void;
 		onRemove(): void;
 	}
 

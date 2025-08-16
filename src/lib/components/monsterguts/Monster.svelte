@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IMonster } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types';
 	import MonsterImmunity from './monster/MonsterImmunity.svelte';
 	import MonsterClock from './monster/MonsterClock.svelte';
 	import MonsterPart from './monster/MonsterPart.svelte';
@@ -27,7 +27,7 @@
 	};
 
 	interface Props {
-		monster: IMonster;
+		monster: MonsterGuts.IMonster;
 	}
 
 	let { monster = $bindable() }: Props = $props();

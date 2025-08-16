@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types';
 	import WeaponTag from '$lib/components/monsterguts/WeaponTag.svelte';
 	import { createBlankEquipmentTag } from '$lib/utils/monsterguts.utils';
 
 	interface Props {
-		weapon: IWeapon;
-		onChange: (weapon: IWeapon) => void;
+		weapon: MonsterGuts.IWeapon;
+		onChange: (weapon: MonsterGuts.IWeapon) => void;
 		onDelete: () => void;
 	}
 
@@ -49,7 +49,7 @@
 		dirty = true;
 	}
 
-	function updateTag(tag: IEquipmentTag, index: number) {
+	function updateTag(tag: MonsterGuts.IEquipmentTag, index: number) {
 		weapon = {
 			...weapon,
 			weaponTags: weapon.weaponTags.map((t, i) => {

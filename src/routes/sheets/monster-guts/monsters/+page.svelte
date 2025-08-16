@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { createBlankMonster, shapeAsValidMonster } from '$lib/utils/monsterguts.utils';
 	import Monster from '$lib/components/monsterguts/Monster.svelte';
-	import type { IMonster } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types';
 
-	let monsterList: IMonster[] = $state([]);
+	let monsterList: MonsterGuts.IMonster[] = $state([]);
 	let files: FileList | undefined = $state();
 
 	async function importFiles() {
-		let list: IMonster[] = [];
+		let list: MonsterGuts.IMonster[] = [];
 		if (files && files.length > 0) {
 			for (let index = 0; index < files.length; index++) {
 				const file = await files[index].text();
-				const mon = JSON.parse(file) as unknown as IMonster;
+				const mon = JSON.parse(file) as unknown as MonsterGuts.IMonster;
 				list.push(shapeAsValidMonster(mon));
 			}
 			monsterList = [...monsterList, ...list];

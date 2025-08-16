@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import type { ICharacter, IEquipmentTag, IWeapon } from '$lib/types/MonsterGutsTypes';
+	import type { MonsterGuts } from '$lib/types/MonsterGutsTypes';
 
 	import Weapon from '$lib/components/monsterguts/Weapon.svelte';
 	import EquipmentTag from '$lib/components/monsterguts/EquipmentTag.svelte';
@@ -12,7 +12,7 @@
 
 	let { data }: PageProps = $props();
 
-	let characterList: ICharacter[] = $state(data.characterList);
+	let characterList: MonsterGuts.ICharacter[] = $state(data.characterList);
 
 	$effect(() => {
 		if (dirty) {
@@ -27,7 +27,7 @@
 	});
 
 	let dirty = false;
-	let selectedCharacter: ICharacter | undefined = $state();
+	let selectedCharacter: MonsterGuts.ICharacter | undefined = $state();
 	$inspect(selectedCharacter);
 
 	$effect(() => {
@@ -38,7 +38,7 @@
 
 	function createNewCharacter() {
 		// Note: definte new constant instead of making defaults. Using defaults will result in same reference that will propagate to new defined characters
-		const newChar: ICharacter = createBlankCharacter();
+		const newChar: MonsterGuts.ICharacter = createBlankCharacter();
 		characterList = [...characterList, newChar];
 		selectedCharacter = newChar;
 		dirty = true;
@@ -57,7 +57,7 @@
 	}
 
 	function addWeapon() {
-		const newWeapon: IWeapon = createBlankWeapon();
+		const newWeapon: MonsterGuts.IWeapon = createBlankWeapon();
 		if (selectedCharacter) {
 			selectedCharacter.weapons = [...selectedCharacter.weapons, newWeapon];
 			selectedCharacter.activeWeapon = selectedCharacter.weapons.length - 1;
@@ -73,7 +73,7 @@
 		}
 	}
 
-	function updateWeapon(weapon: IWeapon, index: number) {
+	function updateWeapon(weapon: MonsterGuts.IWeapon, index: number) {
 		if (selectedCharacter) {
 			selectedCharacter.weapons = selectedCharacter.weapons.map((w, i) => {
 				return i === index ? weapon : w;
@@ -100,7 +100,7 @@
 		}
 	}
 
-	function updateEquipmentTag(tag: IEquipmentTag, index: number) {
+	function updateEquipmentTag(tag: MonsterGuts.IEquipmentTag, index: number) {
 		if (selectedCharacter) {
 			selectedCharacter.equipment.tags = selectedCharacter.equipment.tags.map((t, i) => {
 				return i === index ? tag : t;
@@ -202,9 +202,9 @@
 					{#each selectedCharacter.equipment.tags as tag, i}
 						<div class="flex flex-col flex-wrap gap-2">
 							<EquipmentTag
-								{tag}
-								on:change={(e) => updateEquipmentTag(e.detail, i)}
-								on:remove={() => deleteEquipmentTag(i)}
+								bind:tag={selectedCharacter.equipment.tags[i]}
+								onChange={(e) => updateEquipmentTag(e, i)}
+								onRemove={() => deleteEquipmentTag(i)}
 							/>
 						</div>
 					{/each}

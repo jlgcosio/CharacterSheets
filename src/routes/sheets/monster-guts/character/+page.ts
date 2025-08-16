@@ -1,11 +1,11 @@
-import type { ICharacter } from '$lib/types/MonsterGutsTypes';
+import type { MonsterGuts } from '$lib/types/MonsterGutsTypes';
 import type { PageLoad } from '../$types';
 
 export const load: PageLoad = async ({ params }) => {
-	let characterList: ICharacter[] = [];
+	let characterList: MonsterGuts.ICharacter[] = [];
 	const list = localStorage.getItem('monster-guts');
 	if (list) {
-		const parsed = JSON.parse(list) as unknown as ICharacter[];
+		const parsed = JSON.parse(list) as unknown as MonsterGuts.ICharacter[];
 		// TODO list cleanup to prevent errors when loading values
 
 		characterList = parsed;
