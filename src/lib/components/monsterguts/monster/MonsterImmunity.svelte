@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
-	interface MonsterImmunityDispatcher {
-		change: boolean;
+	interface Props {
+		label: string;
+		immunity: boolean;
+		onChange: (immunity: boolean) => void;
 	}
 
-	const dispatch = createEventDispatcher<MonsterImmunityDispatcher>();
-
-	export let label: string = '';
-	export let immunity: boolean = false;
+	let { label = '', immunity = $bindable(false), onChange }: Props = $props();
 </script>
 
 <div class="form-control col-span-1 items-center">
@@ -17,6 +14,6 @@
 		type="checkbox"
 		class="checkbox"
 		bind:checked={immunity}
-		on:change={() => dispatch('change', immunity)}
+		onchange={() => onChange(immunity)}
 	/>
 </div>

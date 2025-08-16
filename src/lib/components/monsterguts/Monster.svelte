@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IMonster, IMonsterTag } from '$lib/types/MonsterGutsTypes';
+	import type { IMonster } from '$lib/types/MonsterGutsTypes';
 	import MonsterImmunity from './monster/MonsterImmunity.svelte';
 	import MonsterClock from './monster/MonsterClock.svelte';
 	import MonsterPart from './monster/MonsterPart.svelte';
@@ -26,7 +26,11 @@
 		property: ClockType;
 	};
 
-	export let monster: IMonster;
+	interface Props {
+		monster: IMonster;
+	}
+
+	let { monster = $bindable() }: Props = $props();
 
 	const clockList: ClockItem[] = [
 		{
@@ -153,7 +157,7 @@
 	}
 </script>
 
-<section class="collapse collapse-arrow mt-4 shadow-md">
+<section class="collapse-arrow collapse mt-4 shadow-md">
 	<input type="checkbox" />
 	<div class="collapse-title flex justify-between text-xl">
 		{monster.name}
@@ -167,22 +171,23 @@
 				</label>
 			</div>
 			<div class="flex items-end">
-				<button class="btn" on:click={exportFile}>Export</button>
+				<button class="btn" onclick={exportFile}>Export</button>
 			</div>
 		</div>
 		<div class="flex flex-wrap gap-4">
 			<label class="form-control flex-auto">
 				<span class="label-text">Description</span>
-				<textarea class="textarea textarea-bordered h-full" bind:value={monster.description} />
+				<textarea class="textarea textarea-bordered h-full" bind:value={monster.description}
+				></textarea>
 			</label>
 			<label class="form-control flex-auto">
 				<span class="label-text">Rage</span>
-				<textarea class="textarea textarea-bordered h-full" bind:value={monster.rage} />
+				<textarea class="textarea textarea-bordered h-full" bind:value={monster.rage}></textarea>
 			</label>
 			<div class="item-center form-control flex-auto gap-2">
 				<div class="flex items-center justify-between">
 					<h3>Tags</h3>
-					<button class="btn" on:click={addTag}>Add Tag</button>
+					<button class="btn" onclick={addTag}>Add Tag</button>
 				</div>
 				{#each monster.tags as tag, i}
 					<div class="flex gap-2">
@@ -198,7 +203,7 @@
 							placeholder="Tag"
 							bind:value={tag.desciption}
 						/>
-						<button class="btn btn-error" on:click={() => deleteTag(i)}>X</button>
+						<button class="btn btn-error" onclick={() => deleteTag(i)}>X</button>
 					</div>
 				{/each}
 			</div>
@@ -233,7 +238,7 @@
 							<MonsterImmunity
 								label={clock.label}
 								immunity={monster.clocks[clock.property].immune}
-								on:change={(e) => updateImmunity(clock.property, e.detail)}
+								onChange={(immunity) => updateImmunity(clock.property, immunity)}
 							/>
 						{/each}
 					</div>
@@ -246,8 +251,8 @@
 								label={clock.label}
 								current={monster.clocks[clock.property].current}
 								max={monster.clocks[clock.property].max}
-								on:reset={() => resetClock(clock.property)}
-								on:change={(e) => updateClock(clock.property, e.detail)}
+								onReset={() => resetClock(clock.property)}
+								onChange={(e) => updateClock(clock.property, e)}
 							/>
 						{/each}
 					</div>
@@ -256,18 +261,18 @@
 			<div class="col-span-2 flex flex-col gap-2 sm:col-span-1">
 				<div class="flex items-center justify-between">
 					<span class="label-text"><b>Parts</b></span>
-					<button class="btn" on:click={addNewPart}>Add new part</button>
+					<button class="btn" onclick={addNewPart}>Add new part</button>
 				</div>
 				{#each monster.parts as part, i}
-					<MonsterPart {part} on:remove={() => deletePart(i)} />
+					<MonsterPart bind:part={monster.parts[i]} remove={() => deletePart(i)} />
 				{/each}
 
 				<div class="flex items-center justify-between">
 					<span class="label-text"><b>Moves</b></span>
-					<button class="btn" on:click={addMove}>Add new move</button>
+					<button class="btn" onclick={addMove}>Add new move</button>
 				</div>
 				{#each monster.moves as move, i}
-					<MonsterMove {move} on:remove={() => deleteMove(i)} />
+					<MonsterMove bind:move={monster.moves[i]} remove={() => deleteMove(i)} />
 				{/each}
 			</div>
 		</section>

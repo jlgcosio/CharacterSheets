@@ -1,14 +1,12 @@
 <script lang="ts">
-	import type { IMonsterMove, IMonsterPart } from '$lib/types/MonsterGutsTypes';
-	import { createEventDispatcher } from 'svelte';
+	import type { IMonsterMove } from '$lib/types/MonsterGutsTypes';
 
-	interface MonsterPartDispatch {
-		remove: undefined;
+	interface Props {
+		move: IMonsterMove;
+		remove: () => void;
 	}
 
-	const dispatch = createEventDispatcher<MonsterPartDispatch>();
-
-	export let move: IMonsterMove;
+	let { move = $bindable(), remove }: Props = $props();
 </script>
 
 <div class="flex">
@@ -24,10 +22,10 @@
 			<input type="number" class="input join-item input-bordered max-w-16" bind:value={move.harm} />
 		</div>
 	</div>
-	<button class="btn btn-error ml-4" on:click={() => dispatch('remove')}>X</button>
+	<button class="btn btn-error ml-4" onclick={remove}>X</button>
 </div>
 <textarea
 	class="join-item textarea textarea-bordered"
 	placeholder="Description"
 	bind:value={move.description}
-/>
+></textarea>

@@ -1,14 +1,12 @@
 <script lang="ts">
 	import type { IMonsterPart } from '$lib/types/MonsterGutsTypes';
-	import { createEventDispatcher } from 'svelte';
 
-	interface MonsterPartDispatch {
-		remove: undefined;
+	interface Props {
+		part: IMonsterPart;
+		remove: () => void;
 	}
 
-	const dispatch = createEventDispatcher<MonsterPartDispatch>();
-
-	export let part: IMonsterPart;
+	let { part = $bindable(), remove }: Props = $props();
 </script>
 
 <div class="flex">
@@ -43,5 +41,5 @@
 			<option value="Soft">Soft</option>
 		</select>
 	</div>
-	<button class="btn btn-error ml-4" on:click={() => dispatch('remove')}>X</button>
+	<button class="btn btn-error ml-4" onclick={remove}>X</button>
 </div>

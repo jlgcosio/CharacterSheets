@@ -1,24 +1,13 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	interface MonsterClockDispatch {
-		reset: undefined;
-		change: {
-			current: number;
-			max: number;
-		};
+	interface Props {
+		onReset: () => void;
+		onChange: (properties: { current: number; max: number }) => void;
+		label?: string;
+		current?: number;
+		max?: number;
 	}
 
-	const dispatch = createEventDispatcher<MonsterClockDispatch>();
-	export let label: string = '';
-	export let current: number = 6;
-	export let max: number = 6;
-
-	function onChange() {
-		dispatch('change', {
-			current,
-			max
-		});
-	}
+	let { label = '', current = 6, max = 6, onReset, onChange }: Props = $props();
 </script>
 
 <label class="form-control flex-1">
@@ -29,7 +18,7 @@
 				type="number"
 				class="input join-item input-bordered max-w-16"
 				bind:value={current}
-				on:change={onChange}
+				onchange={() => onChange({ current, max })}
 				min={0}
 			/>
 			<div class="input join-item input-bordered flex items-center justify-center p-4">
@@ -39,9 +28,10 @@
 				type="number"
 				class="input join-item input-bordered max-w-16"
 				bind:value={max}
-				on:change={onChange}
+				min={0}
+				onchange={() => onChange({ current, max })}
 			/>
-			<button class="btn join-item" on:click={() => dispatch('reset')}>Reset</button>
+			<button class="btn join-item" onclick={onReset}>Reset</button>
 		</div>
 	</div>
 </label>

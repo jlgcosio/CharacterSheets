@@ -3,15 +3,12 @@
 	import Monster from '$lib/components/monsterguts/Monster.svelte';
 	import type { IMonster } from '$lib/types/MonsterGutsTypes';
 
-	// import type { PageData } from './$types';
-
-	// export let data: PageData;
-	let monsterList: IMonster[] = [];
-	let files: FileList;
+	let monsterList: IMonster[] = $state([]);
+	let files: FileList | undefined = $state();
 
 	async function importFiles() {
 		let list: IMonster[] = [];
-		if (files.length > 0) {
+		if (files && files.length > 0) {
 			for (let index = 0; index < files.length; index++) {
 				const file = await files[index].text();
 				const mon = JSON.parse(file) as unknown as IMonster;
@@ -38,13 +35,13 @@
 				accept="json"
 				multiple={true}
 				bind:files
-				on:change={importFiles}
+				onchange={importFiles}
 			/>
 		</div>
-		<button class="btn btn-primary" on:click={addMonster}>Create new monster</button>
+		<button class="btn btn-primary" onclick={addMonster}>Create new monster</button>
 	</div>
 </label>
 
-{#each monsterList as monster}
-	<Monster {monster} />
+{#each monsterList as monster, i}
+	<Monster bind:monster={monsterList[i]} />
 {/each}
