@@ -1,4 +1,3 @@
-import type { MonsterGuts } from '$lib/types/MonsterGutsTypes';
 import type { PageLoad } from '../$types';
 
 export const load: PageLoad = async ({ params }) => {

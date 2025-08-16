@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createBlankMonster, shapeAsValidMonster } from '$lib/utils/monsterguts.utils';
 	import Monster from '$lib/components/monsterguts/Monster.svelte';
-	import type { MonsterGuts } from '$lib/types';
 
 	let monsterList: MonsterGuts.IMonster[] = $state([]);
 	let files: FileList | undefined = $state();

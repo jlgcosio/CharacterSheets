@@ -1,5 +1,4 @@
 import { Resource } from '$lib/enums/MonsterGutsEnums';
-import type { MonsterGuts } from '$lib/types/MonsterGutsTypes';
 
 export function createBlankEquipmentTag(): MonsterGuts.IEquipmentTag {
 	return {

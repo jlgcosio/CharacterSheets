@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { MonsterGuts } from '$lib/types';
 	import WeaponTag from '$lib/components/monsterguts/WeaponTag.svelte';
 	import { createBlankEquipmentTag } from '$lib/utils/monsterguts.utils';
 

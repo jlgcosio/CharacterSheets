@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import type { MonsterGuts } from '$lib/types/MonsterGutsTypes';
 
 	import Weapon from '$lib/components/monsterguts/Weapon.svelte';
 	import EquipmentTag from '$lib/components/monsterguts/EquipmentTag.svelte';

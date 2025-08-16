@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { MonsterGuts } from '$lib/types';
-
 	interface Props {
 		part: MonsterGuts.IMonsterPart;
 		remove: () => void;

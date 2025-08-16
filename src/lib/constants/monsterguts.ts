@@ -1,5 +1,3 @@
-import type { MonsterGuts } from '$lib/types';
-
 export const WeaponTags: MonsterGuts.IEquipmentTag[] = [
 	{
 		name: 'Aimed',
